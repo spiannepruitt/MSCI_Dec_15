@@ -6,8 +6,8 @@ markers:
   uuid: "4efc0110-dfae-4c72-82c6-17bf4857c43f"
   query: "\"MatchFilenameWithCompany.txt\""
   name: "General Query Marker"
-  documentationMarkdown: "Filter using the query \"MatchFilenameWithCompany.txt\""
   implementation: "generalQueryMarker"
+  documentationMarkdown: "Filter using the query \"MatchFilenameWithCompany.txt\""
   plugin: "core"
   uiContribution: "generalQueryMarker-marker-settings"
 mappings:
@@ -31,7 +31,7 @@ mappings:
     \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
     \ = rows\nreturn rows.size()\n"
   name: "Groovy Script (Column)"
-  grouping: "Scripting"
+  implementation: "groovyScriptColumn"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nnumLines = textDocument.getChildren().size()\nlog.write('numLines is ' +\
     \ numLines)\n\nstartLine   = textDocument.find('Filename')\nrows        = []\n\
@@ -41,10 +41,10 @@ mappings:
     t')[2]\n        ])\n    line = line.findNext('\\\\S')\n    if (! line) {\n   \
     \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
     \ = rows\nreturn rows.size()\n\n```\n"
-  implementation: "groovyScriptColumn"
   plugin: "groovy"
-  mappingType: "COLUMN"
+  grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptDataset>
   uuid: "6ee81408-b293-6afa-4ade-7105fd17966f"
   metadataVersion: 2
@@ -55,12 +55,12 @@ mappings:
   previewEnabled: true
   script: "return document.variables['returnRows']"
   name: "Groovy Script (Row)"
-  mappingType: "DATASET"
-  grouping: "Scripting"
+  implementation: "groovyScriptDataset"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     return document.variables['returnRows']\n```\n"
-  implementation: "groovyScriptDataset"
   plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
   uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
@@ -78,10 +78,10 @@ datasetMappings:
   previewEnabled: true
   script: "return document.variables['returnRows']"
   name: "Groovy Script (Row)"
-  mappingType: "DATASET"
-  grouping: "Scripting"
+  implementation: "groovyScriptDataset"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     return document.variables['returnRows']\n```\n"
-  implementation: "groovyScriptDataset"
   plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
   uiContribution: "groovyScriptDataset-mapping-settings"
