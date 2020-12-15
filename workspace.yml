@@ -15,7 +15,7 @@ objects:
   documentSet:
   - name: "MSCI_Company_List_DocSet"
     type: "DocumentSet"
-  - name: "TestParallelBug"
+  - name: "TestParallelBugDocSet"
     type: "DocumentSet"
   - name: "MSCIBatchesDocSet"
     type: "DocumentSet"
