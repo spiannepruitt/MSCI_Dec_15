@@ -2,25 +2,6 @@
 batchSize: 1
 streaming: false
 steps:
-- !<pluginProcessor>
-  name: "Text"
-  uuid: "7f15f378-6797-4658-9276-7189c7dad572"
-  minimized: true
-  enabled: true
-  config: !<textParser>
-    name: "Text"
-    description: "Supports classification based on text,  and enrichment with intelligent\
-      \ text structure"
-    enabled: false
-    extensionPoints:
-    - "DOCUMENT_ENRICHER"
-    maxLineLength: 15000
-    implementation: "textParser"
-    resourcePath: "textParser"
-  implementation: "pluginProcessor"
-  tags:
-  - "processor"
-  - "enricher"
 - !<remoteSource>
   name: "MSCIBatches"
   uuid: "458dff20-335a-4134-a251-0b602432fc70"
