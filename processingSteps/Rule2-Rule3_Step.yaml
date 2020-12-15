@@ -16,8 +16,8 @@ mappings:
   documentationMarkdown: "Use the filename of the source document."
   implementation: "fixedValueMapper"
   plugin: "core"
-  uiContribution: "fixedValueMapper-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "fixedValueMapper-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "085bcb0c-e678-c944-a188-7e1e8da93bd5"
   metadataVersion: 2
@@ -50,8 +50,8 @@ mappings:
     new MapHelper()\n\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "b7e4db13-9636-184a-c3ff-36fd706fd9db"
   metadataVersion: 2
@@ -338,8 +338,8 @@ mappings:
     \ true\n    }\n    return ret\n}\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "36f85bc5-315a-4d47-8481-e1310915e7d6"
   metadataVersion: 2
@@ -618,8 +618,8 @@ mappings:
     \ listClassShares\n}\nreturn val\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "170b2e85-137a-a822-51fc-0dd385ae7b6d"
   metadataVersion: 2
@@ -641,8 +641,8 @@ mappings:
     ```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "8596d4cf-4a90-85a2-ba7c-7d0688c8ea9a"
   metadataVersion: 2
@@ -699,8 +699,8 @@ mappings:
     return val\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "dfbcc965-500d-49c4-b658-9a23c7cc3741"
   metadataVersion: 2
@@ -818,8 +818,8 @@ mappings:
     ```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "c1bd1844-61e0-4d64-bb51-776e8009decb"
   metadataVersion: 2
@@ -840,8 +840,8 @@ mappings:
     \    ret = varRule32\n}\nreturn ret\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "234a28d7-fecb-8e70-c40a-5fb803afd39c"
   metadataVersion: 2
@@ -872,8 +872,8 @@ mappings:
     if (coRow) {\n    return coRow[0].Company\n}\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
-  uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+  uiContribution: "groovyScriptColumn-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
