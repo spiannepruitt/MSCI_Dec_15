@@ -30,6 +30,25 @@ steps:
   tags:
   - "processor"
   - "builder"
+- !<pluginProcessor>
+  name: "Text"
+  uuid: "dc9174fb-d4de-49f9-87a2-da725443e259"
+  minimized: true
+  enabled: true
+  config: !<textParser>
+    name: "Text"
+    description: "Supports classification based on text,  and enrichment with intelligent\
+      \ text structure"
+    enabled: false
+    extensionPoints:
+    - "DOCUMENT_ENRICHER"
+    maxLineLength: 15000
+    implementation: "textParser"
+    resourcePath: "textParser"
+  implementation: "pluginProcessor"
+  tags:
+  - "processor"
+  - "enricher"
 - !<documentSetWriter>
   name: "MSCIBatchesDocSet"
   uuid: "0cbc2c67-57a2-45e5-9181-14c6e7552224"
