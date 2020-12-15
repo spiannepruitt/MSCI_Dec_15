@@ -1,0 +1,164 @@
+---
+columns:
+- name: "SourceFileType"
+  longName: "SourceFileType"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "ServicerName"
+  longName: "ServicerName"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "DistributionDate"
+  longName: "DistributionDate"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Delinquent90days"
+  longName: "Delinquent90days"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Delinquent6190days"
+  longName: "Delinquent6190days"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Delinquent3160days"
+  longName: "Delinquent3160days"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Current130days"
+  longName: "Current130days"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "NumberofLoans"
+  longName: "NumberofLoans"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "DelinquencyAmount"
+  longName: "DelinquencyAmount"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "ClassificationName"
+  longName: "ClassificationName"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Classificationversion"
+  longName: "Classificationversion"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "DocumentPath"
+  longName: "DocumentPath"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+dataSource:
+  position: 0
+  joinWithIds: true
+  skipHeader: true
+  ignoreConfidence: true
+schemaVersion: 1

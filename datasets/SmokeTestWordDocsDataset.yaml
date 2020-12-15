@@ -1,0 +1,47 @@
+---
+columns:
+- name: "newColumn"
+  longName: "New & Column"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "newColumn1"
+  longName: "New Column1"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "newColumn2"
+  longName: "New Column2"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+dataSource:
+  position: 0
+  joinWithIds: true
+  skipHeader: true
+  ignoreConfidence: true
+schemaVersion: 1
