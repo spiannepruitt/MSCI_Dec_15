@@ -1,0 +1,33 @@
+---
+schemaVersion: 1
+objects:
+  dataset:
+  - name: "MatchFilesWithCompany_Dataset"
+    type: "Dataset"
+  - name: "Rule2-Rule3"
+    description: "Copied from 4.x 11/30/2020"
+    type: "Dataset"
+  source:
+  - name: "MSCI_Company_List_Source"
+    type: "SourceDefinition"
+  - name: "MSCIBatches"
+    type: "SourceDefinition"
+  documentSet:
+  - name: "MSCI_Company_List_DocSet"
+    type: "DocumentSet"
+  - name: "MSCIBatchesDocSet"
+    type: "DocumentSet"
+  pipeline:
+  - name: "MSCI_Rule2-Rule3_pipeline"
+    type: "ProcessingPipeline"
+  - name: "Populate_Company_List_pipeline"
+    type: "ProcessingPipeline"
+  - name: "MSCI_ingest_pipeline"
+    type: "ProcessingPipeline"
+  - name: "MSCI_Ingest_Company_List_pipeline"
+    type: "ProcessingPipeline"
+  processingStep:
+  - name: "Populate_Company_List_Step"
+    type: "ProcessingStep"
+  - name: "Rule2-Rule3_Step"
+    type: "ProcessingStep"

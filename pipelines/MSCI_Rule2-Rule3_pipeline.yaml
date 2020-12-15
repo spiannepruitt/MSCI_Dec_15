@@ -1,0 +1,62 @@
+---
+batchSize: 1
+streaming: false
+steps:
+- !<remoteSource>
+  name: "MSCIBatches"
+  uuid: "458dff20-335a-4134-a251-0b602432fc70"
+  minimized: true
+  enabled: true
+  sourceDefinitionName: "MSCIBatches"
+  implementation: "remoteSource"
+  tags:
+  - "reader"
+- !<pluginBuilder>
+  name: "PDF (Text)"
+  uuid: "58324667-9498-4e8b-bcfa-aff97208455b"
+  minimized: true
+  enabled: true
+  config: !<pdfToText>
+    name: "PDF (Text)"
+    layout: true
+    pathToExecutable: "pdftotext"
+    useExecutable: true
+    scaleFactor: 0.0
+    isStoreThumbnails: false
+    skipPdfsWithoutFonts: false
+    implementation: "pdfToText"
+    storeThumbnails: false
+  implementation: "pluginBuilder"
+  tags:
+  - "processor"
+  - "builder"
+- !<pluginProcessor>
+  name: "Text"
+  uuid: "7f15f378-6797-4658-9276-7189c7dad572"
+  minimized: true
+  enabled: true
+  config: !<textParser>
+    name: "Text"
+    description: "Supports classification based on text,  and enrichment with intelligent\
+      \ text structure"
+    enabled: false
+    extensionPoints:
+    - "DOCUMENT_ENRICHER"
+    maxLineLength: 15000
+    implementation: "textParser"
+    resourcePath: "textParser"
+  implementation: "pluginProcessor"
+  tags:
+  - "processor"
+  - "enricher"
+- !<documentSetWriter>
+  name: "MSCIBatchesDocSet"
+  uuid: "0cbc2c67-57a2-45e5-9181-14c6e7552224"
+  minimized: true
+  enabled: true
+  documentSetName: "MSCIBatchesDocSet"
+  implementation: "documentSetWriter"
+  tags:
+  - "writer"
+  - "document set"
+schemaVersion: 1

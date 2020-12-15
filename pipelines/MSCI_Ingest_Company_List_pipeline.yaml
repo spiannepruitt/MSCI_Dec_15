@@ -1,0 +1,57 @@
+---
+batchSize: 1
+streaming: false
+steps:
+- !<remoteSource>
+  name: "MSCI_Company_List_Source"
+  uuid: "81bbc972-c2a6-4258-ac7e-d49757ce1314"
+  minimized: true
+  enabled: true
+  sourceDefinitionName: "MSCI_Company_List_Source"
+  implementation: "remoteSource"
+  tags:
+  - "reader"
+- !<pluginBuilder>
+  name: "Tika (Text)"
+  uuid: "d4d4c3e5-fd8e-439f-b580-51ab0dd62b49"
+  minimized: true
+  enabled: true
+  config: !<tikaDocumentBuilder>
+    name: "Tika (Text)"
+    extractMetadata: false
+    implementation: "tikaDocumentBuilder"
+    xmlOutput: false
+  implementation: "pluginBuilder"
+  tags:
+  - "processor"
+  - "builder"
+- !<pluginProcessor>
+  name: "Text"
+  uuid: "b710b247-ee79-4812-b728-26cea40b0693"
+  minimized: true
+  enabled: true
+  config: !<textParser>
+    name: "Text"
+    description: "Supports classification based on text,  and enrichment with intelligent\
+      \ text structure"
+    enabled: false
+    extensionPoints:
+    - "DOCUMENT_ENRICHER"
+    maxLineLength: 15000
+    implementation: "textParser"
+    resourcePath: "textParser"
+  implementation: "pluginProcessor"
+  tags:
+  - "processor"
+  - "enricher"
+- !<documentSetWriter>
+  name: "MSCI_Company_List_DocSet"
+  uuid: "16cd5626-357f-476d-85fc-2e256b9be3a7"
+  minimized: true
+  enabled: true
+  documentSetName: "MSCI_Company_List_DocSet"
+  implementation: "documentSetWriter"
+  tags:
+  - "writer"
+  - "document set"
+schemaVersion: 1

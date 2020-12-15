@@ -1,8 +1,0 @@
----
-sourceType: "JDBC"
-jdbcPersistenceMetadata:
-  driverClass: "com.mysql.cj.jdbc.Driver"
-  jdbcUrl: "jdbc:mysql://pendo5x.cesn8hbbzlwc.us-east-1.rds.amazonaws.com:3306/pendo?serverTimezone=Europe/Amsterdam&useSSL=false"
-  username: "admin"
-contacts: {}
-schemaVersion: 1

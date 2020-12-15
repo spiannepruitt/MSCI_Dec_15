@@ -1,7 +1,46 @@
 ---
 columns:
-- name: "Sourcepath"
-  longName: "Sourcepath"
+- name: "Company"
+  longName: "Company"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "ShareClass"
+  longName: "ShareClass"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "TotalSharesCommonStock"
+  longName: "TotalSharesCommonStock"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "ParValue"
+  longName: "ParValue"
   type: "string"
   summary: false
   required: false
@@ -15,32 +54,6 @@ columns:
   relatedDatasetRequired: false
 - name: "Filename"
   longName: "Filename"
-  type: "string"
-  summary: false
-  required: false
-  immutable: false
-  primaryKey: false
-  dataSource:
-    position: 0
-    joinWithIds: true
-    skipHeader: true
-    ignoreConfidence: true
-  relatedDatasetRequired: false
-- name: "newColumn"
-  longName: "New Column"
-  type: "string"
-  summary: false
-  required: false
-  immutable: false
-  primaryKey: false
-  dataSource:
-    position: 0
-    joinWithIds: true
-    skipHeader: true
-    ignoreConfidence: true
-  relatedDatasetRequired: false
-- name: "Lines"
-  longName: "Lines"
   type: "string"
   summary: false
   required: false

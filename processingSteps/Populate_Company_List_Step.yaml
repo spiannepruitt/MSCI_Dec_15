@@ -1,0 +1,87 @@
+---
+plugin: "textParser"
+processingTimeout: 600000
+markers:
+- !<generalQueryMarker>
+  uuid: "4efc0110-dfae-4c72-82c6-17bf4857c43f"
+  query: "\"MatchFilenameWithCompany.txt\""
+  name: "General Query Marker"
+  documentationMarkdown: "Filter using the query \"MatchFilenameWithCompany.txt\""
+  implementation: "generalQueryMarker"
+  plugin: "core"
+  uiContribution: "generalQueryMarker-marker-settings"
+mappings:
+- !<groovyScriptColumn>
+  uuid: "02ebf885-e02a-94c7-2682-80944854d4bc"
+  metadataVersion: 2
+  minimized: true
+  showHelp: false
+  variableName: "makeRows"
+  attachEnabled: true
+  previewEnabled: false
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "numLines = textDocument.getChildren().size()\nlog.write('numLines is '\
+    \ + numLines)\n\nstartLine   = textDocument.find('Filename')\nrows        = []\n\
+    \nif (! startLine) { return rows}\n\nline    = startLine.findNext('\\\\S')\nfor\
+    \ (i=0;i<numLines-startLine.index;i++) {\n\n    \n    rows.add([\n        \"Filename\"\
+    \  :   line.value.split('\\t')[1],\n        \"Company\"   :   line.value.split('\\\
+    t')[2]\n        ])\n    line = line.findNext('\\\\S')\n    if (! line) {\n   \
+    \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
+    \ = rows\nreturn rows.size()\n"
+  name: "Groovy Script (Column)"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nnumLines = textDocument.getChildren().size()\nlog.write('numLines is ' +\
+    \ numLines)\n\nstartLine   = textDocument.find('Filename')\nrows        = []\n\
+    \nif (! startLine) { return rows}\n\nline    = startLine.findNext('\\\\S')\nfor\
+    \ (i=0;i<numLines-startLine.index;i++) {\n\n    \n    rows.add([\n        \"Filename\"\
+    \  :   line.value.split('\\t')[1],\n        \"Company\"   :   line.value.split('\\\
+    t')[2]\n        ])\n    line = line.findNext('\\\\S')\n    if (! line) {\n   \
+    \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
+    \ = rows\nreturn rows.size()\n\n```\n"
+  implementation: "groovyScriptColumn"
+  plugin: "groovy"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptDataset>
+  uuid: "6ee81408-b293-6afa-4ade-7105fd17966f"
+  metadataVersion: 2
+  minimized: true
+  showHelp: false
+  datasetName: "MatchFilesWithCompany_Dataset"
+  attachEnabled: true
+  previewEnabled: true
+  script: "return document.variables['returnRows']"
+  name: "Groovy Script (Row)"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return document.variables['returnRows']\n```\n"
+  implementation: "groovyScriptDataset"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  uiContribution: "groovyScriptDataset-mapping-settings"
+documentSets:
+- enabled: true
+  name: "MSCI_Company_List_DocSet"
+helpers: []
+schemaVersion: 1
+datasetMappings:
+- !<groovyScriptDataset>
+  uuid: "6ee81408-b293-6afa-4ade-7105fd17966f"
+  metadataVersion: 2
+  minimized: true
+  showHelp: false
+  datasetName: "MatchFilesWithCompany_Dataset"
+  attachEnabled: true
+  previewEnabled: true
+  script: "return document.variables['returnRows']"
+  name: "Groovy Script (Row)"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return document.variables['returnRows']\n```\n"
+  implementation: "groovyScriptDataset"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  uiContribution: "groovyScriptDataset-mapping-settings"

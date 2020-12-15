@@ -1,0 +1,36 @@
+---
+batchSize: 1
+streaming: false
+steps:
+- !<documentSetSource>
+  name: "MSCI_Company_List_DocSet"
+  uuid: "718a5002-2daa-404c-a03a-182c2d114388"
+  minimized: true
+  enabled: true
+  documentSetName: "MSCI_Company_List_DocSet"
+  query: "*"
+  implementation: "documentSetSource"
+  tags:
+  - "reader"
+  - "document set"
+- !<documentExtractionProcessingStep>
+  name: "Populate_Company_List_Step"
+  uuid: "f59eb70a-4384-41e0-9f84-efd763446ca9"
+  minimized: true
+  enabled: true
+  processingStepName: "Populate_Company_List_Step"
+  implementation: "documentExtractionProcessingStep"
+  tags:
+  - "processor"
+  - "processing step"
+- !<datasetWriter>
+  name: "MatchFilesWithCompany_Dataset"
+  uuid: "53cb1981-d8bb-48ce-8744-6a3032af70b6"
+  minimized: true
+  enabled: true
+  datasetName: "MatchFilesWithCompany_Dataset"
+  implementation: "datasetWriter"
+  tags:
+  - "writer"
+  - "dataset"
+schemaVersion: 1
