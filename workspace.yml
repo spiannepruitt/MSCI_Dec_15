@@ -18,6 +18,8 @@ objects:
   - name: "MSCIBatchesDocSet"
     type: "DocumentSet"
   pipeline:
+  - name: "testParallelBugPL"
+    type: "ProcessingPipeline"
   - name: "MSCI_Rule2-Rule3_pipeline"
     type: "ProcessingPipeline"
   - name: "Populate_Company_List_pipeline"
