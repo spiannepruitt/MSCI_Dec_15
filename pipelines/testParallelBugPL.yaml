@@ -50,11 +50,11 @@ steps:
   - "processor"
   - "enricher"
 - !<documentSetWriter>
-  name: "MSCIBatchesDocSet"
-  uuid: "006e481d-141f-47dd-bf9d-42b7999ef5cb"
-  minimized: true
+  name: "TestParallelBugDocSet"
+  uuid: "35cb10fe-e87e-4fbd-9e46-42ca9cc2200b"
+  minimized: false
   enabled: true
-  documentSetName: "MSCIBatchesDocSet"
+  documentSetName: "TestParallelBugDocSet"
   implementation: "documentSetWriter"
   tags:
   - "writer"
