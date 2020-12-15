@@ -2,34 +2,6 @@
 batchSize: 1
 streaming: false
 steps:
-- !<remoteSource>
-  name: "MSCIBatches"
-  uuid: "458dff20-335a-4134-a251-0b602432fc70"
-  minimized: true
-  enabled: true
-  sourceDefinitionName: "MSCIBatches"
-  implementation: "remoteSource"
-  tags:
-  - "reader"
-- !<pluginBuilder>
-  name: "PDF (Text)"
-  uuid: "58324667-9498-4e8b-bcfa-aff97208455b"
-  minimized: false
-  enabled: true
-  config: !<pdfToText>
-    name: "PDF (Text)"
-    layout: true
-    pathToExecutable: "pdftotext"
-    useExecutable: true
-    scaleFactor: 0.0
-    isStoreThumbnails: false
-    skipPdfsWithoutFonts: false
-    implementation: "pdfToText"
-    storeThumbnails: false
-  implementation: "pluginBuilder"
-  tags:
-  - "processor"
-  - "builder"
 - !<pluginProcessor>
   name: "Text"
   uuid: "7f15f378-6797-4658-9276-7189c7dad572"
@@ -49,6 +21,34 @@ steps:
   tags:
   - "processor"
   - "enricher"
+- !<remoteSource>
+  name: "MSCIBatches"
+  uuid: "458dff20-335a-4134-a251-0b602432fc70"
+  minimized: true
+  enabled: true
+  sourceDefinitionName: "MSCIBatches"
+  implementation: "remoteSource"
+  tags:
+  - "reader"
+- !<pluginBuilder>
+  name: "PDF (Text)"
+  uuid: "58324667-9498-4e8b-bcfa-aff97208455b"
+  minimized: true
+  enabled: true
+  config: !<pdfToText>
+    name: "PDF (Text)"
+    layout: true
+    pathToExecutable: "pdftotext"
+    useExecutable: true
+    scaleFactor: 0.0
+    isStoreThumbnails: false
+    skipPdfsWithoutFonts: false
+    implementation: "pdfToText"
+    storeThumbnails: false
+  implementation: "pluginBuilder"
+  tags:
+  - "processor"
+  - "builder"
 - !<documentSetWriter>
   name: "MSCIBatchesDocSet"
   uuid: "0cbc2c67-57a2-45e5-9181-14c6e7552224"
