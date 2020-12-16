@@ -848,7 +848,7 @@ mappings:
   minimized: true
   showHelp: false
   variableName: "varCompany"
-  attachEnabled: false
+  attachEnabled: true
   previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
@@ -858,8 +858,8 @@ mappings:
     import org.apache.commons.beanutils.BeanUtils\nimport com.pendosystems.canopy.service.classification.ClassificationContextHolder\n\
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
-    \    = searchHelper.searchDataset (\"MatchFilenameWithCompany\", strQuery, 1)\n\
-    if (coRow) {\n    return coRow[0].Company\n}"
+    \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
+    \ 1)\nif (coRow) {\n    return coRow[0].Company\n}"
   name: "Groovy Script (Column)"
   implementation: "groovyScriptColumn"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
@@ -868,8 +868,8 @@ mappings:
     import org.apache.commons.beanutils.BeanUtils\nimport com.pendosystems.canopy.service.classification.ClassificationContextHolder\n\
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
-    \    = searchHelper.searchDataset (\"MatchFilenameWithCompany\", strQuery, 1)\n\
-    if (coRow) {\n    return coRow[0].Company\n}\n```\n"
+    \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
+    \ 1)\nif (coRow) {\n    return coRow[0].Company\n}\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
