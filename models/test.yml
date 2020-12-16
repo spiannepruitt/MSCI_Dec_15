@@ -1,0 +1,17 @@
+---
+plugin: "spacyText"
+modelParameters: !<com.pendosystems.canopy.plugins.spacytext.SpacyTextModelParameters>
+  modelType: "SUPERVISED"
+  trainable: true
+  objectType: "SpacyTextModelParameters"
+  baseModel: "en"
+  environment: "kish"
+  includeUnlabelledData: false
+  epochs: 20
+  purgeable: true
+  useSentenceContext: false
+  outputToLog: true
+  implementation: "spacyText"
+labelSets: []
+documentSets: []
+schemaVersion: 1
