@@ -59,7 +59,7 @@ mappings:
   showHelp: false
   variableName: "varRule2AmountOfStock0"
   attachEnabled: true
-  previewEnabled: false
+  previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -82,11 +82,11 @@ mappings:
     \ && endMark) {\n\n    subDoc  = textDocument.slice(startMark.index, endMark.index+1)\n\
     \    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n    log.write( 'subDoc on line 28 in varRule2AmountOfStock0:\
-    \ ' + subDoc.join('\\n'))\n    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n    \n    ok = false\n\
-    \    // find at least one year on one line\n    if (subDoc.find('^\\\\s*20\\\\\
-    d{2}\\\\s*$')) {ok = true}\n    \n    if (!ok) {return ''}\n    numMark = subDoc.find(numbersRe)\n\
-    \    if (numMark) {\n        units = numMark.findAndExtract(numbersRe,1)?.value\n\
+    \ ' + subDoc.getChildren().join('\\n'))\n    log.write('\\\\\\\\\\\\\\\\\\\\\\\
+    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n   \
+    \ \n    ok = false\n    // find at least one year on one line\n    if (subDoc.find('^\\\
+    \\s*20\\\\d{2}\\\\s*$')) {ok = true}\n    \n    if (!ok) {return ''}\n    numMark\
+    \ = subDoc.find(numbersRe)\n    if (numMark) {\n        units = numMark.findAndExtract(numbersRe,1)?.value\n\
     \    }\n\n    if ((endMark) && (endMark.value.split(secEndRe).size() > 1 )) {\n\
     \        valList = endMark.value.split(secEndRe)[1].findAll('\\\\s+([,\\\\.]?\\\
     \\d+)+\\\\s+')\n        if (valList) {\n            val     = valList[column]\n\
@@ -220,11 +220,11 @@ mappings:
     \ && endMark) {\n\n    subDoc  = textDocument.slice(startMark.index, endMark.index+1)\n\
     \    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
     \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n    log.write( 'subDoc on line 28 in varRule2AmountOfStock0:\
-    \ ' + subDoc.join('\\n'))\n    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n    \n    ok = false\n\
-    \    // find at least one year on one line\n    if (subDoc.find('^\\\\s*20\\\\\
-    d{2}\\\\s*$')) {ok = true}\n    \n    if (!ok) {return ''}\n    numMark = subDoc.find(numbersRe)\n\
-    \    if (numMark) {\n        units = numMark.findAndExtract(numbersRe,1)?.value\n\
+    \ ' + subDoc.getChildren().join('\\n'))\n    log.write('\\\\\\\\\\\\\\\\\\\\\\\
+    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')\n   \
+    \ \n    ok = false\n    // find at least one year on one line\n    if (subDoc.find('^\\\
+    \\s*20\\\\d{2}\\\\s*$')) {ok = true}\n    \n    if (!ok) {return ''}\n    numMark\
+    \ = subDoc.find(numbersRe)\n    if (numMark) {\n        units = numMark.findAndExtract(numbersRe,1)?.value\n\
     \    }\n\n    if ((endMark) && (endMark.value.split(secEndRe).size() > 1 )) {\n\
     \        valList = endMark.value.split(secEndRe)[1].findAll('\\\\s+([,\\\\.]?\\\
     \\d+)+\\\\s+')\n        if (valList) {\n            val     = valList[column]\n\
@@ -925,7 +925,7 @@ mappings:
   showHelp: false
   datasetName: "Rule2-Rule3"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   script: "return testRows"
   name: "Groovy Script (Row)"
   implementation: "groovyScriptDataset"
@@ -947,7 +947,7 @@ datasetMappings:
   showHelp: false
   datasetName: "Rule2-Rule3"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   script: "return testRows"
   name: "Groovy Script (Row)"
   implementation: "groovyScriptDataset"
