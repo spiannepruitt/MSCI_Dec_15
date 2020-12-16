@@ -59,7 +59,7 @@ mappings:
   showHelp: false
   variableName: "varRule2AmountOfStock0"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -884,37 +884,41 @@ mappings:
   showHelp: false
   variableName: "testRows"
   attachEnabled: true
-  previewEnabled: false
+  previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
   script: "row = []\nif (document.variables['listClassShares']) {\n    document.variables['listClassShares'].each{it\
-    \ ->\n        row.add([\n        \"Filename\"                  : document.sourcePath,\n\
-    \        // \"Company\"                   : varCompany,\n        \"ShareClassName\"\
-    \            : it.ShareClassName,\n        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n\
-    \        \"ParValue\"                  : it.ParValue\n            ])\n    }\n\
-    } else if (varRule2 || varRule3) {\n    row.add ([\n        \"Filename\"     \
-    \             : document.sourcePath,\n        // \"Company\"                 \
-    \  : varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n        \"\
-    ParValue\"                  : varRule3\n    ])\n} else {\n    row.add ([\n   \
-    \     \"Filename\"      : document.sourcePath,\n        // \"Company\"       :\
-    \ varCompany,\n        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"\
-    \      : ''\n    ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row"
+    \ ->\n        row.add([\n        \"Filename\"                  : document.filename,\n\
+    \        \"Sourcepath\"                : document.sourcePath,\n        // \"Company\"\
+    \                   : varCompany,\n        \"ShareClassName\"            : it.ShareClassName,\n\
+    \        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n        \"\
+    ParValue\"                  : it.ParValue\n            ])\n    }\n} else if (varRule2\
+    \ || varRule3) {\n    row.add ([\n        \"Filename\"                  : document.filename,\n\
+    \        \"Sourcepath\"                : document.sourcePath,\n        // \"Company\"\
+    \                   : varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n\
+    \        \"ParValue\"                  : varRule3\n    ])\n} else {\n    row.add\
+    \ ([\n        \"Filename\"                  : document.filename,\n        \"Sourcepath\"\
+    \                : document.sourcePath,\n        // \"Company\"       : varCompany,\n\
+    \        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n  \
+    \  ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row"
   name: "Groovy Script (Column)"
   implementation: "groovyScriptColumn"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nrow = []\nif (document.variables['listClassShares']) {\n    document.variables['listClassShares'].each{it\
-    \ ->\n        row.add([\n        \"Filename\"                  : document.sourcePath,\n\
-    \        // \"Company\"                   : varCompany,\n        \"ShareClassName\"\
-    \            : it.ShareClassName,\n        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n\
-    \        \"ParValue\"                  : it.ParValue\n            ])\n    }\n\
-    } else if (varRule2 || varRule3) {\n    row.add ([\n        \"Filename\"     \
-    \             : document.sourcePath,\n        // \"Company\"                 \
-    \  : varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n        \"\
-    ParValue\"                  : varRule3\n    ])\n} else {\n    row.add ([\n   \
-    \     \"Filename\"      : document.sourcePath,\n        // \"Company\"       :\
-    \ varCompany,\n        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"\
-    \      : ''\n    ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row\n```\n"
+    \ ->\n        row.add([\n        \"Filename\"                  : document.filename,\n\
+    \        \"Sourcepath\"                : document.sourcePath,\n        // \"Company\"\
+    \                   : varCompany,\n        \"ShareClassName\"            : it.ShareClassName,\n\
+    \        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n        \"\
+    ParValue\"                  : it.ParValue\n            ])\n    }\n} else if (varRule2\
+    \ || varRule3) {\n    row.add ([\n        \"Filename\"                  : document.filename,\n\
+    \        \"Sourcepath\"                : document.sourcePath,\n        // \"Company\"\
+    \                   : varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n\
+    \        \"ParValue\"                  : varRule3\n    ])\n} else {\n    row.add\
+    \ ([\n        \"Filename\"                  : document.filename,\n        \"Sourcepath\"\
+    \                : document.sourcePath,\n        // \"Company\"       : varCompany,\n\
+    \        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n  \
+    \  ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
