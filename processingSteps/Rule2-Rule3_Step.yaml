@@ -846,30 +846,34 @@ mappings:
   uuid: "234a28d7-fecb-8e70-c40a-5fb803afd39c"
   metadataVersion: 2
   minimized: true
-  showHelp: false
+  showHelp: true
   variableName: "varCompany"
   attachEnabled: true
   previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
-  script: "import com.pendosystems.canopy.core.utils.SpringApplicationContext\nimport\
-    \ com.pendosystems.canopy.core.query.QueryContext\nimport com.pendosystems.canopy.core.UserContext\n\
+  script: "/*\nimport com.pendosystems.canopy.core.utils.SpringApplicationContext\n\
+    import com.pendosystems.canopy.core.query.QueryContext\nimport com.pendosystems.canopy.core.UserContext\n\
     import org.apache.commons.beanutils.BeanUtils\nimport com.pendosystems.canopy.service.classification.ClassificationContextHolder\n\
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
     \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
-    \ 1)\nif (coRow) {\n    return coRow[0].Company\n}"
+    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + document.sourcePath\
+    \ + '\"'\nstrSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchDataset\
+    \ (strSet, strQuery, 1)\n\nif (coRow) {\n    return coRow[0].Company\n}\n"
   name: "Groovy Script (Column)"
   implementation: "groovyScriptColumn"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
-    ```\nimport com.pendosystems.canopy.core.utils.SpringApplicationContext\nimport\
-    \ com.pendosystems.canopy.core.query.QueryContext\nimport com.pendosystems.canopy.core.UserContext\n\
+    ```\n/*\nimport com.pendosystems.canopy.core.utils.SpringApplicationContext\n\
+    import com.pendosystems.canopy.core.query.QueryContext\nimport com.pendosystems.canopy.core.UserContext\n\
     import org.apache.commons.beanutils.BeanUtils\nimport com.pendosystems.canopy.service.classification.ClassificationContextHolder\n\
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
     \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
-    \ 1)\nif (coRow) {\n    return coRow[0].Company\n}\n```\n"
+    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + document.sourcePath\
+    \ + '\"'\nstrSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchDataset\
+    \ (strSet, strQuery, 1)\n\nif (coRow) {\n    return coRow[0].Company\n}\n\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
