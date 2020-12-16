@@ -2,7 +2,214 @@
 plugin: "textParser"
 processingTimeout: 600000
 markers: []
-mappings: []
+mappings:
+- !<groovyScriptColumn>
+  uuid: "a3d5d5ea-bffa-b4f6-6b99-b944422383ea"
+  minimized: true
+  showHelp: false
+  variableName: "holderList1"
+  attachEnabled: true
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "// Section Header - \"Major Shareholders\"\n// \"1. Search for the primary\
+    \ keyword in the document\n// 2. If keyword exists, then collect all company names\
+    \ (refer company legal endings in secondary keywords) within that table\n// 3.\
+    \ Collect all company names with legal endings as seperate row\"\n\nstr      \
+    \   = ''\nval         = ''\nhList       = []\nholderList  = []\nsecStartRe  =\
+    \ 'Major\\\\s*shareholders'\nsecEndRe    = 'major\\\\s*shareholders\\\\s*do\\\\\
+    s*not'\n\n// Holding of ordinary shares <-- on 2 lines:\n//                  \
+    \                         Holding of excluding shares held \n// Holder       \
+    \                         ordinary shares       in treasury BP\nprimary1Re  =\
+    \ 'Holding\\\\s*of'\nprimary2Re  = '\\\\s*ordinary\\\\s*shares'\nsecondRe    =\
+    \ '(?i)(Inc|Plc|Bank|Ltd|Incorporated)'\nsecMark     = textDocument.find(secStartRe)\n\
+    mark        = secMark ? secMark.findNext(primary1Re) : null\nlargeRe     = '\\\
+    \\d{2,3},\\\\d{3},\\\\d{3}' // 99,999,999\n// \nif (mark) {\n    startMark   =\
+    \ mark.findNext(primary2Re)\n    endMark     = startMark ? startMark.findNext(secEndRe)\
+    \ : null\n    if (startMark && endMark) {\n        mark = startMark\n        for\
+    \ (i=0;i<20;i++) {\n            \n            hList = getHolder(mark, endMark)\n\
+    \            // log.write(hList.join('||'))\n            if (hList[0]) {\n   \
+    \             \n                holderList.add([\n                    \"Holder\"\
+    \ : hList[1],\n                    \"Amount\" : hList[2]\n                   \
+    \ ])\n                log.write('adding ' + holderList.last())\n             \
+    \   mark = hList[0]    \n                \n            } else {break;}\n     \
+    \   }\n    }\n}\n// New: Changes in Share Capital and Shareholdings of Substantial\
+    \ Shareholders -> appears on many pages\n// New: after above, the sentence \"\
+    Particulars of shareholdings of the top 10 shareholders\"\nnextMark    = null\n\
+    firstMark   = null\nlastMark    = null\nif (! holderList) {\n    // try 20 times\n\
+    \    firstAnchorRe   = '^\\\\s*Changes\\\\s*in\\\\s*Share\\\\s*Capital\\\\s*and\\\
+    \\s*Shareholdings\\\\s*of\\\\s*Substantial\\\\s*Shareholders\\\\s*$'\n    secondAnchorRe\
+    \  = '^\\\\s*(?i)Particulars\\\\s*.*top\\\\s*(10|ten)\\\\s*shareholders\\\\s*'\n\
+    \    firstMark       = textDocument.find(firstAnchorRe)\n    if (firstMark) {\n\
+    \        for (i=0;i<20;i++){\n            nextMark = firstMark.findNext(secondAnchorRe)\n\
+    \            if (nextMark) {\n                break\n            } else {\n  \
+    \              firstMark = firstMark.findNext(firstAnchorRe)\n               \
+    \ if (! firstMark) {\n                    break\n                }\n         \
+    \   }\n        }\n    }\n\n    if (firstMark && nextMark) {\n        lastMark\
+    \ = nextMark.findNext('^\\\\s*Notes:?\\\\s*1\\\\.?')\n    }\n    if (firstMark\
+    \ && nextMark && lastMark) {\n    \n    // 23,520,968,297\n        moneyRows \
+    \      = []\n        \n        largeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\\d{3},\\\
+    \\d{3},\\\\d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index,\
+    \ lastMark.index)\n        \n        log.write('subDoc is: ' + subDoc)\n     \
+    \   log.write(subDoc.getChildren().join('\\n'))\n        \n        firstColLength\
+    \ = getFirstColLength(subDoc)\n        log.write('firstColLength: ' + firstColLength)\n\
+    \        // collect all the rows with large money\n        moneyRows = subDoc.findAll(largeMoneyRe)\n\
+    \        moneyRows.each{ m ->\n\n            // holder is first column separated\
+    \ from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
+    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
+    \ concatenate all the components of the name together. It can be wrapped on \n\
+    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
+    \            holderList.add([\n                \"Holder\" : name,\n          \
+    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
+    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
+    \                            registered number 102498. The provisions regulating\
+    \ the operations \n//   its nominee Guaranty                                 \
+    \                of the company, known as its ‘objects’, were historically stated\
+    \ in a \n//   Nominees Limited                 5,496,296,263             27.13\
+    \     company’s memorandum. The Act abolished the need to have object \n// BlackRock,\
+    \ Inc.                     1,531,724,983              7.60     provisions and\
+    \ so at the AGM held on 15 April 2010 shareholders \n// The Vanguard Group, Inc\
+    \              813,197,253               4.00\n\ndef getHolder(m,end) {\n    //\
+    \ log.write('in getHolder with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\
+    \n    retList = [null,null,null]\n    \n    sMark = m.findNext(secondRe)\n   \
+    \ \n    if (sMark && sMark.index < end.index) {\n        \n        s = sMark.value.trim()\
+    \ // remove leading whitespace\n        \n        s = s.split('\\\\s{2,}')[0].trim()\n\
+    \        if (s.endsWith(',')) {\n            s = s.take(s.length()-1)\n      \
+    \  }\n        // log.write('here at 55: ' + s)\n        \n    }\n    \n    sMark\
+    \ = m.findNext(largeRe)\n    \n    if (sMark && sMark.index < end.index) {\n \
+    \       \n        n = sMark.value.trim() // remove leading whitespace\n      \
+    \  \n        if (n.split('\\\\s{2,}').size()>1){\n            n = n.split('\\\\\
+    s{2,}')[1].trim()\n        }\n    }\n    if (s) {\n        retList = []\n    \
+    \    retList.add(sMark)\n        retList.add(s)\n        retList.add(n)\n    }\n\
+    \    return retList\n}\n\ndef gatherName(n, currentLine, colLength) {\n    go\
+    \ = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n \
+    \   \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\S')\n\
+    \    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex is\
+    \ ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
+    \        // if not on the last moneyRow, search down to next moneyRow\n      \
+    \  // if on the last moneyRow, search until empty\n        go = false\n      \
+    \  if (nextMoneyRow) {\n            if (mark && mark.index < nextMoneyRow.index)\
+    \ {\n                go = true\n            }\n        } else {\n            go\
+    \ = true\n        }\n        log.write('mark.index is ' + mark.index)\n      \
+    \  // will not have blank lines in the wrapped name ??\n        if (go && mark.index\
+    \ == compareIndex + 1 ) {\n            str = mark.value.take(colLength).trim()\n\
+    \            if (str) {\n                n = n + ' ' + str\n                log.write('name\
+    \ is now: ' + n)\n            }\n        } else {break}\n        compareIndex\
+    \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
+    \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
+    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
+    \\s*of\\\\s*shareholders')\n    retLen  = -1\n    if (mark) {\n        str   \
+    \  = mark.value\n        orgLen  = str.length()\n        log.write('orgLen: '\
+    \ + orgLen)\n        \n        firstColStrTrimmed = mark.split('\\\\s{3,}')[0]\n\
+    \        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed + '***')\n \
+    \       \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
+    \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
+    \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
+    \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\n// Section Header - \"Major Shareholders\"\n// \"1. Search for the primary\
+    \ keyword in the document\n// 2. If keyword exists, then collect all company names\
+    \ (refer company legal endings in secondary keywords) within that table\n// 3.\
+    \ Collect all company names with legal endings as seperate row\"\n\nstr      \
+    \   = ''\nval         = ''\nhList       = []\nholderList  = []\nsecStartRe  =\
+    \ 'Major\\\\s*shareholders'\nsecEndRe    = 'major\\\\s*shareholders\\\\s*do\\\\\
+    s*not'\n\n// Holding of ordinary shares <-- on 2 lines:\n//                  \
+    \                         Holding of excluding shares held \n// Holder       \
+    \                         ordinary shares       in treasury BP\nprimary1Re  =\
+    \ 'Holding\\\\s*of'\nprimary2Re  = '\\\\s*ordinary\\\\s*shares'\nsecondRe    =\
+    \ '(?i)(Inc|Plc|Bank|Ltd|Incorporated)'\nsecMark     = textDocument.find(secStartRe)\n\
+    mark        = secMark ? secMark.findNext(primary1Re) : null\nlargeRe     = '\\\
+    \\d{2,3},\\\\d{3},\\\\d{3}' // 99,999,999\n// \nif (mark) {\n    startMark   =\
+    \ mark.findNext(primary2Re)\n    endMark     = startMark ? startMark.findNext(secEndRe)\
+    \ : null\n    if (startMark && endMark) {\n        mark = startMark\n        for\
+    \ (i=0;i<20;i++) {\n            \n            hList = getHolder(mark, endMark)\n\
+    \            // log.write(hList.join('||'))\n            if (hList[0]) {\n   \
+    \             \n                holderList.add([\n                    \"Holder\"\
+    \ : hList[1],\n                    \"Amount\" : hList[2]\n                   \
+    \ ])\n                log.write('adding ' + holderList.last())\n             \
+    \   mark = hList[0]    \n                \n            } else {break;}\n     \
+    \   }\n    }\n}\n// New: Changes in Share Capital and Shareholdings of Substantial\
+    \ Shareholders -> appears on many pages\n// New: after above, the sentence \"\
+    Particulars of shareholdings of the top 10 shareholders\"\nnextMark    = null\n\
+    firstMark   = null\nlastMark    = null\nif (! holderList) {\n    // try 20 times\n\
+    \    firstAnchorRe   = '^\\\\s*Changes\\\\s*in\\\\s*Share\\\\s*Capital\\\\s*and\\\
+    \\s*Shareholdings\\\\s*of\\\\s*Substantial\\\\s*Shareholders\\\\s*$'\n    secondAnchorRe\
+    \  = '^\\\\s*(?i)Particulars\\\\s*.*top\\\\s*(10|ten)\\\\s*shareholders\\\\s*'\n\
+    \    firstMark       = textDocument.find(firstAnchorRe)\n    if (firstMark) {\n\
+    \        for (i=0;i<20;i++){\n            nextMark = firstMark.findNext(secondAnchorRe)\n\
+    \            if (nextMark) {\n                break\n            } else {\n  \
+    \              firstMark = firstMark.findNext(firstAnchorRe)\n               \
+    \ if (! firstMark) {\n                    break\n                }\n         \
+    \   }\n        }\n    }\n\n    if (firstMark && nextMark) {\n        lastMark\
+    \ = nextMark.findNext('^\\\\s*Notes:?\\\\s*1\\\\.?')\n    }\n    if (firstMark\
+    \ && nextMark && lastMark) {\n    \n    // 23,520,968,297\n        moneyRows \
+    \      = []\n        \n        largeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\\d{3},\\\
+    \\d{3},\\\\d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index,\
+    \ lastMark.index)\n        \n        log.write('subDoc is: ' + subDoc)\n     \
+    \   log.write(subDoc.getChildren().join('\\n'))\n        \n        firstColLength\
+    \ = getFirstColLength(subDoc)\n        log.write('firstColLength: ' + firstColLength)\n\
+    \        // collect all the rows with large money\n        moneyRows = subDoc.findAll(largeMoneyRe)\n\
+    \        moneyRows.each{ m ->\n\n            // holder is first column separated\
+    \ from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
+    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
+    \ concatenate all the components of the name together. It can be wrapped on \n\
+    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
+    \            holderList.add([\n                \"Holder\" : name,\n          \
+    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
+    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
+    \                            registered number 102498. The provisions regulating\
+    \ the operations \n//   its nominee Guaranty                                 \
+    \                of the company, known as its ‘objects’, were historically stated\
+    \ in a \n//   Nominees Limited                 5,496,296,263             27.13\
+    \     company’s memorandum. The Act abolished the need to have object \n// BlackRock,\
+    \ Inc.                     1,531,724,983              7.60     provisions and\
+    \ so at the AGM held on 15 April 2010 shareholders \n// The Vanguard Group, Inc\
+    \              813,197,253               4.00\n\ndef getHolder(m,end) {\n    //\
+    \ log.write('in getHolder with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\
+    \n    retList = [null,null,null]\n    \n    sMark = m.findNext(secondRe)\n   \
+    \ \n    if (sMark && sMark.index < end.index) {\n        \n        s = sMark.value.trim()\
+    \ // remove leading whitespace\n        \n        s = s.split('\\\\s{2,}')[0].trim()\n\
+    \        if (s.endsWith(',')) {\n            s = s.take(s.length()-1)\n      \
+    \  }\n        // log.write('here at 55: ' + s)\n        \n    }\n    \n    sMark\
+    \ = m.findNext(largeRe)\n    \n    if (sMark && sMark.index < end.index) {\n \
+    \       \n        n = sMark.value.trim() // remove leading whitespace\n      \
+    \  \n        if (n.split('\\\\s{2,}').size()>1){\n            n = n.split('\\\\\
+    s{2,}')[1].trim()\n        }\n    }\n    if (s) {\n        retList = []\n    \
+    \    retList.add(sMark)\n        retList.add(s)\n        retList.add(n)\n    }\n\
+    \    return retList\n}\n\ndef gatherName(n, currentLine, colLength) {\n    go\
+    \ = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n \
+    \   \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\S')\n\
+    \    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex is\
+    \ ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
+    \        // if not on the last moneyRow, search down to next moneyRow\n      \
+    \  // if on the last moneyRow, search until empty\n        go = false\n      \
+    \  if (nextMoneyRow) {\n            if (mark && mark.index < nextMoneyRow.index)\
+    \ {\n                go = true\n            }\n        } else {\n            go\
+    \ = true\n        }\n        log.write('mark.index is ' + mark.index)\n      \
+    \  // will not have blank lines in the wrapped name ??\n        if (go && mark.index\
+    \ == compareIndex + 1 ) {\n            str = mark.value.take(colLength).trim()\n\
+    \            if (str) {\n                n = n + ' ' + str\n                log.write('name\
+    \ is now: ' + n)\n            }\n        } else {break}\n        compareIndex\
+    \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
+    \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
+    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
+    \\s*of\\\\s*shareholders')\n    retLen  = -1\n    if (mark) {\n        str   \
+    \  = mark.value\n        orgLen  = str.length()\n        log.write('orgLen: '\
+    \ + orgLen)\n        \n        firstColStrTrimmed = mark.split('\\\\s{3,}')[0]\n\
+    \        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed + '***')\n \
+    \       \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
+    \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
+    \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
+    \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
