@@ -304,7 +304,7 @@ mappings:
   showHelp: false
   variableName: "makeRows"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -333,9 +333,41 @@ mappings:
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+- !<groovyScriptDataset>
+  uuid: "2366d926-93be-c31f-cd33-783843be6502"
+  minimized: true
+  showHelp: false
+  datasetName: "MajorShareholders"
+  attachEnabled: true
+  previewEnabled: true
+  script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
 helpers: []
 schemaVersion: 1
-datasetMappings: []
+datasetMappings:
+- !<groovyScriptDataset>
+  uuid: "2366d926-93be-c31f-cd33-783843be6502"
+  minimized: true
+  showHelp: false
+  datasetName: "MajorShareholders"
+  attachEnabled: true
+  previewEnabled: true
+  script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptDataset-mapping-settings"
