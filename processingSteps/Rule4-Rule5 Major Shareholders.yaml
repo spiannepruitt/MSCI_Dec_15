@@ -285,7 +285,7 @@ mappings:
   showHelp: false
   variableName: "varCompany"
   attachEnabled: false
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -294,6 +294,40 @@ mappings:
   implementation: "groovyScriptColumn"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nreturn\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptColumn>
+  uuid: "1250dae5-5d40-bc3b-58ae-35762c03c38f"
+  minimized: true
+  showHelp: false
+  variableName: "makeRows"
+  attachEnabled: true
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "row = holderList1\nif (!row) {\n    row = holderList2\n}\nreturnRow = []\n\
+    row.each{it ->\n    returnRow.add([\n        \"Filename\"      : document.filename,\n\
+    \        \"Company\"       : varCompany,\n        \"Shareholder\"   : it.Holder,\n\
+    \        \"Amount\"        : it.Amount\n        ])\n    log.write('added returnRow:\
+    \ ' + returnRow.last())\n}\nif (! returnRow) {\n    returnRow.add([\n        \n\
+    \        \"Filename\"      : document.filename,\n        \"Company\"       : varCompany,\n\
+    \        \"Shareholder\"   : '',\n        \"Amount\"        : ''\n        ])\n\
+    \    log.write('added returnRow: ' + returnRow.last())\n}\nreturn returnRow"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nrow = holderList1\nif (!row) {\n    row = holderList2\n}\nreturnRow = []\n\
+    row.each{it ->\n    returnRow.add([\n        \"Filename\"      : document.filename,\n\
+    \        \"Company\"       : varCompany,\n        \"Shareholder\"   : it.Holder,\n\
+    \        \"Amount\"        : it.Amount\n        ])\n    log.write('added returnRow:\
+    \ ' + returnRow.last())\n}\nif (! returnRow) {\n    returnRow.add([\n        \n\
+    \        \"Filename\"      : document.filename,\n        \"Company\"       : varCompany,\n\
+    \        \"Shareholder\"   : '',\n        \"Amount\"        : ''\n        ])\n\
+    \    log.write('added returnRow: ' + returnRow.last())\n}\nreturn returnRow\n\
+    ```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
