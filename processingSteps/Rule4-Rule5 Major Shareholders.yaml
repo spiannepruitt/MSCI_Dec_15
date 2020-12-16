@@ -9,7 +9,7 @@ mappings:
   showHelp: false
   variableName: "holderList1"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -206,6 +206,75 @@ mappings:
     \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
     \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptColumn>
+  uuid: "d779802f-540b-69f2-6038-dff0efd04b1c"
+  minimized: true
+  showHelp: false
+  variableName: "holderList2"
+  attachEnabled: true
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "if (holderList1) {\n    return []\n}\nholderList = []\n/*\nINTEREST OF\
+    \ SUBSTANTIAL SHAREHOLDERS (LONG POSITION) \n \nTo the knowledge of the Company,\
+    \ as at 31 December 2019, the following persons, other than a Director or chief\
+    \ executive of the \nCompany, had an interest of 5% or more in the Shares or underlying\
+    \ Shares of the Company as recorded in the register required to \nbe kept by the\
+    \ Company under section 336 of the SFO: \n \n \n                             \
+    \                                                                            \
+    \           Approximate percentage of \n Name of shareholder                 \
+    \              Nature of interest/Capacity              Number of Shares     \
+    \        interest in the Company3 \n */\nlargeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\
+    \\d{3},\\\\d{3},\\\\d{3})\\\\s+'\nmark            = textDocument.find('(?i)INTEREST\\\
+    \\s*OF\\\\s*SUBSTANTIAL\\\\s*SHAREHOLDERS')\nif (mark) {\n    mark = mark.findNext('(?i)Name\\\
+    \\s*of\\\\s*shareholder')\n}\nif (mark){\n//  find the next occurrence of 3 blank\
+    \ lines\n    endIndex = find3BlankLines(mark)\n    if (endIndex > 0) {\n     \
+    \   subDoc = textDocument.slice(mark.index, endIndex + 1)\n        log.write('subDoc\
+    \ in holderList2: ' + subDoc.getChildren().join('\\n'))\n        subDoc.getChildren().each{it\
+    \ ->\n            if (it.value =~ largeMoneyRe) {\n                log.write('it:\
+    \ ' + it)\n                holderList.add([\n                \"Holder\" : it.value.split('\\\
+    \\s{3,}')[0].trim(),\n                \"Amount\" : it.findAndExtract(largeMoneyRe,1).value\n\
+    \                ])\n\n            }\n        }\n    }\n    \n}\nreturn holderList\
+    \ \n /**************************************************************/\n def find3BlankLines(m)\
+    \ {\n    blankRe     = '^\\\\s*$'\n    retIndex    = -1\n    \n    start   = m\n\
+    \    m = m.findNext(blankRe)\n    for (x=0;x<30;x++) {\n        if (textDocument.slice(m.index,\
+    \ m.index + 3).value.trim()) {\n            m = m.findNext(blankRe)\n        }\
+    \ else {\n            retIndex = m.index\n            break;\n        }\n    \
+    \        \n    }\n    return retIndex\n}"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nif (holderList1) {\n    return []\n}\nholderList = []\n/*\nINTEREST OF SUBSTANTIAL\
+    \ SHAREHOLDERS (LONG POSITION) \n \nTo the knowledge of the Company, as at 31\
+    \ December 2019, the following persons, other than a Director or chief executive\
+    \ of the \nCompany, had an interest of 5% or more in the Shares or underlying\
+    \ Shares of the Company as recorded in the register required to \nbe kept by the\
+    \ Company under section 336 of the SFO: \n \n \n                             \
+    \                                                                            \
+    \           Approximate percentage of \n Name of shareholder                 \
+    \              Nature of interest/Capacity              Number of Shares     \
+    \        interest in the Company3 \n */\nlargeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\
+    \\d{3},\\\\d{3},\\\\d{3})\\\\s+'\nmark            = textDocument.find('(?i)INTEREST\\\
+    \\s*OF\\\\s*SUBSTANTIAL\\\\s*SHAREHOLDERS')\nif (mark) {\n    mark = mark.findNext('(?i)Name\\\
+    \\s*of\\\\s*shareholder')\n}\nif (mark){\n//  find the next occurrence of 3 blank\
+    \ lines\n    endIndex = find3BlankLines(mark)\n    if (endIndex > 0) {\n     \
+    \   subDoc = textDocument.slice(mark.index, endIndex + 1)\n        log.write('subDoc\
+    \ in holderList2: ' + subDoc.getChildren().join('\\n'))\n        subDoc.getChildren().each{it\
+    \ ->\n            if (it.value =~ largeMoneyRe) {\n                log.write('it:\
+    \ ' + it)\n                holderList.add([\n                \"Holder\" : it.value.split('\\\
+    \\s{3,}')[0].trim(),\n                \"Amount\" : it.findAndExtract(largeMoneyRe,1).value\n\
+    \                ])\n\n            }\n        }\n    }\n    \n}\nreturn holderList\
+    \ \n /**************************************************************/\n def find3BlankLines(m)\
+    \ {\n    blankRe     = '^\\\\s*$'\n    retIndex    = -1\n    \n    start   = m\n\
+    \    m = m.findNext(blankRe)\n    for (x=0;x<30;x++) {\n        if (textDocument.slice(m.index,\
+    \ m.index + 3).value.trim()) {\n            m = m.findNext(blankRe)\n        }\
+    \ else {\n            retIndex = m.index\n            break;\n        }\n    \
+    \        \n    }\n    return retIndex\n}\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
