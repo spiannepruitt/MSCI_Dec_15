@@ -848,7 +848,7 @@ mappings:
   minimized: true
   showHelp: true
   variableName: "varCompany"
-  attachEnabled: true
+  attachEnabled: false
   previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
