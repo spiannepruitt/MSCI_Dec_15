@@ -35,6 +35,8 @@ objects:
     type: "ProcessingStep"
   - name: "Rule2-Rule3_Step"
     type: "ProcessingStep"
+  - name: "Rule4-Rule5 Major Shareholders"
+    type: "ProcessingStep"
   model:
   - name: "test"
     type: "Model"

@@ -1,0 +1,9 @@
+---
+plugin: "textParser"
+processingTimeout: 600000
+markers: []
+mappings: []
+documentSets: []
+helpers: []
+schemaVersion: 1
+datasetMappings: []
