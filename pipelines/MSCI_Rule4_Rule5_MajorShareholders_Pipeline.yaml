@@ -16,7 +16,7 @@ steps:
 - !<documentExtractionProcessingStep>
   name: "Rule4-Rule5 Major Shareholders"
   uuid: "3d4aa545-c25d-4a45-a16d-d274d7022685"
-  minimized: true
+  minimized: false
   enabled: true
   processingStepName: "Rule4-Rule5 Major Shareholders_Step"
   implementation: "documentExtractionProcessingStep"
