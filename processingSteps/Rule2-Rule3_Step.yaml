@@ -884,7 +884,7 @@ mappings:
   showHelp: false
   variableName: "testRows"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -919,9 +919,41 @@ mappings:
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
+- !<groovyScriptDataset>
+  uuid: "36e2bd39-d736-2212-5dab-16c8340c231f"
+  minimized: true
+  showHelp: false
+  datasetName: "Rule2-Rule3"
+  attachEnabled: true
+  previewEnabled: true
+  script: "return testRows"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return testRows\n```\n"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
 helpers: []
 schemaVersion: 1
-datasetMappings: []
+datasetMappings:
+- !<groovyScriptDataset>
+  uuid: "36e2bd39-d736-2212-5dab-16c8340c231f"
+  minimized: true
+  showHelp: false
+  datasetName: "Rule2-Rule3"
+  attachEnabled: true
+  previewEnabled: true
+  script: "return testRows"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return testRows\n```\n"
+  plugin: "groovy"
+  mappingType: "DATASET"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptDataset-mapping-settings"
