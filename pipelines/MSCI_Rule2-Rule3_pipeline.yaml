@@ -23,14 +23,14 @@ steps:
   tags:
   - "processor"
   - "processing step"
-- !<documentSetWriter>
-  name: "MSCIBatchesDocSet"
-  uuid: "0cbc2c67-57a2-45e5-9181-14c6e7552224"
+- !<datasetWriter>
+  name: "Rule2-Rule3"
+  uuid: "12711ff0-03c4-413b-ac68-a49bf0dd6faa"
   minimized: true
   enabled: true
-  documentSetName: "MSCIBatchesDocSet"
-  implementation: "documentSetWriter"
+  datasetName: "Rule2-Rule3"
+  implementation: "datasetWriter"
   tags:
   - "writer"
-  - "document set"
+  - "dataset"
 schemaVersion: 1
