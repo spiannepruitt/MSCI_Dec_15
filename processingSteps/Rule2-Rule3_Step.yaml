@@ -849,7 +849,7 @@ mappings:
   showHelp: true
   variableName: "varCompany"
   attachEnabled: false
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -874,6 +874,47 @@ mappings:
     \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + document.sourcePath\
     \ + '\"'\nstrSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchDataset\
     \ (strSet, strQuery, 1)\n\nif (coRow) {\n    return coRow[0].Company\n}\n\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptColumn>
+  uuid: "103c0e8f-b258-4a47-8cdf-4c8a8c8cd923"
+  minimized: true
+  showHelp: false
+  variableName: "testRows"
+  attachEnabled: true
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "row = []\nif (document.variables['listClassShares']) {\n    document.variables['listClassShares'].each{it\
+    \ ->\n        row.add([\n        \"Filename\"                  : document.sourcePath,\n\
+    \        \"Company\"                   : varCompany,\n        \"ShareClassName\"\
+    \            : it.ShareClassName,\n        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n\
+    \        \"ParValue\"                  : it.ParValue\n            ])\n    }\n\
+    } else if (varRule2 || varRule3) {\n    row.add ([\n        \"Filename\"     \
+    \             : document.sourcePath,\n        \"Company\"                   :\
+    \ varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n        \"ParValue\"\
+    \                  : varRule3\n    ])\n} else {\n    row.add ([\n        \"Filename\"\
+    \      : document.sourcePath,\n        \"Company\"       : varCompany,\n     \
+    \   \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n    ])\n\
+    }\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nrow = []\nif (document.variables['listClassShares']) {\n    document.variables['listClassShares'].each{it\
+    \ ->\n        row.add([\n        \"Filename\"                  : document.sourcePath,\n\
+    \        \"Company\"                   : varCompany,\n        \"ShareClassName\"\
+    \            : it.ShareClassName,\n        \"TotalSharesCommonStock\"    : it.TotalSharesCommonStock,\n\
+    \        \"ParValue\"                  : it.ParValue\n            ])\n    }\n\
+    } else if (varRule2 || varRule3) {\n    row.add ([\n        \"Filename\"     \
+    \             : document.sourcePath,\n        \"Company\"                   :\
+    \ varCompany,\n        \"TotalSharesCommonStock\"    : varRule2,\n        \"ParValue\"\
+    \                  : varRule3\n    ])\n} else {\n    row.add ([\n        \"Filename\"\
+    \      : document.sourcePath,\n        \"Company\"       : varCompany,\n     \
+    \   \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n    ])\n\
+    }\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
