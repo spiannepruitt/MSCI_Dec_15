@@ -13,8 +13,8 @@ columns:
     skipHeader: true
     ignoreConfidence: true
   relatedDatasetRequired: false
-- name: "ShareClass"
-  longName: "ShareClass"
+- name: "ShareClassName"
+  longName: "ShareClassName"
   type: "string"
   summary: false
   required: false
