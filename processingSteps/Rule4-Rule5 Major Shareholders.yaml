@@ -3,7 +3,9 @@ plugin: "textParser"
 processingTimeout: 600000
 markers: []
 mappings: []
-documentSets: []
+documentSets:
+- enabled: true
+  name: "MSCIBatchesDocSet"
 helpers: []
 schemaVersion: 1
 datasetMappings: []
