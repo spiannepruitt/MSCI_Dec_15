@@ -1,0 +1,60 @@
+---
+columns:
+- name: "Company"
+  longName: "Company"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Shareholder"
+  longName: "Shareholder"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Amount"
+  longName: "Amount"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "Filename"
+  longName: "Filename"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+dataSource:
+  position: 0
+  joinWithIds: true
+  skipHeader: true
+  ignoreConfidence: true
+schemaVersion: 1

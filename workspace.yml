@@ -2,6 +2,8 @@
 schemaVersion: 1
 objects:
   dataset:
+  - name: "MajorShareholders"
+    type: "Dataset"
   - name: "MatchFilesWithCompany_Dataset"
     type: "Dataset"
   - name: "Rule2-Rule3"
