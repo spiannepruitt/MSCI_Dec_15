@@ -35,11 +35,11 @@ objects:
   - name: "MSCI_Ingest_Company_List_pipeline"
     type: "ProcessingPipeline"
   processingStep:
+  - name: "Rule4-Rule5 Major Shareholders_Step"
+    type: "ProcessingStep"
   - name: "Populate_Company_List_Step"
     type: "ProcessingStep"
   - name: "Rule2-Rule3_Step"
-    type: "ProcessingStep"
-  - name: "Rule4-Rule5 Major Shareholders"
     type: "ProcessingStep"
   model:
   - name: "test"

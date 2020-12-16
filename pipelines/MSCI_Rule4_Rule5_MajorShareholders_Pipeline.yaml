@@ -18,7 +18,7 @@ steps:
   uuid: "3d4aa545-c25d-4a45-a16d-d274d7022685"
   minimized: true
   enabled: true
-  processingStepName: "Rule4-Rule5 Major Shareholders"
+  processingStepName: "Rule4-Rule5 Major Shareholders_Step"
   implementation: "documentExtractionProcessingStep"
   tags:
   - "processor"
