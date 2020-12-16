@@ -13,5 +13,7 @@ modelParameters: !<com.pendosystems.canopy.plugins.spacytext.SpacyTextModelParam
   outputToLog: true
   implementation: "spacyText"
 labelSets: []
-documentSets: []
+documentSets:
+- enabled: true
+  name: "MSCIBatchesDocSet"
 schemaVersion: 1
