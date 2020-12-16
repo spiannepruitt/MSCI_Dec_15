@@ -28,6 +28,8 @@ objects:
     type: "ProcessingPipeline"
   - name: "Populate_Company_List_pipeline"
     type: "ProcessingPipeline"
+  - name: "MSCI_Rule4_Rule5_MajorShareholders_Pipeline"
+    type: "ProcessingPipeline"
   - name: "MSCI_ingest_pipeline"
     type: "ProcessingPipeline"
   - name: "MSCI_Ingest_Company_List_pipeline"
