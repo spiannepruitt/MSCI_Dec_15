@@ -216,7 +216,7 @@ mappings:
   showHelp: false
   variableName: "holderList2"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -275,6 +275,25 @@ mappings:
     \ m.index + 3).value.trim()) {\n            m = m.findNext(blankRe)\n        }\
     \ else {\n            retIndex = m.index\n            break;\n        }\n    \
     \        \n    }\n    return retIndex\n}\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptColumn>
+  uuid: "1dd64069-cbf9-706f-d872-76431d59e82c"
+  minimized: true
+  showHelp: false
+  variableName: "varCompany"
+  attachEnabled: false
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "return"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nreturn\n```\n"
   plugin: "groovy"
   grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
