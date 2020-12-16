@@ -65,6 +65,19 @@ columns:
     skipHeader: true
     ignoreConfidence: true
   relatedDatasetRequired: false
+- name: "Sourcepath"
+  longName: "Sourcepath"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
 dataSource:
   position: 0
   joinWithIds: true
