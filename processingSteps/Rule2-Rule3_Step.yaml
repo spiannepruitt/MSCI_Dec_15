@@ -148,34 +148,39 @@ mappings:
     \ ' + amt)\n            mark = mark.findNext('\\\\S')\n        }        \n   \
     \     if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
-    \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
-    \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
-    \ Stock: $0.01 par value per share, 110,000,000 shares authorized; \n    //  \
-    \     58,250,000 and 50,650,000 shares issued and outstanding as of \n    // \
-    \      December 31, 2019 and December 31, 2018, respectively ............... \
-    \ 1,434,420    1,249,560 \n    //     Common Stock: $0.01 par value per share,\
-    \ 315,000,000 shares authorized, \n    //       208,900,758 and 206,425,656 shares\
-    \ issued and outstanding as of \n    //       December 31, 2019 and December 31,\
-    \ 2018, respectively ...............      2,073        2,051 \n    //////////////////////////////\n\
-    \    // CASE 2\n    // Common stock, $1.00 par value: 750,000,000 shares authorized;\
-    \ 505,221,643 and 477,496,499 shares           505,222           477,496\n   \
-    \ // issued and outstanding\n    mark      = textDocument.find('(shares\\\\s*)?issued\\\
-    \\s*and\\\\s*outstanding')\n    amountRe  = '(\\\\d{1,3}(,\\\\d{3})+\\\\s+)'\n\
-    \    classRe   = '(?i)(Preferred|Common|Class\\\\s*[A-Z].?[1-9]?)'\n    parRe\
-    \     = '(?i)\\\\s+(\\\\S\\\\d\\\\.\\\\d{1,4})\\\\s+par\\\\s*value'\n    startMark\
-    \ = null\n    name      = ''\n    par       = ''\n    amt       = ''\n    // find\
-    \ a class name on the same line as \"issued and outstanding\", or \n    // on\
-    \ the line before that line\n    if (mark) {\n        if (mark =~ classRe){\n\
-    \            startMark = mark\n        }\n        if (! startMark) {\n       \
-    \     startMark = mark.findPrevious(classRe)\n        }\n    }\n    log.write('at\
-    \ 189, startMark is: ' + startMark + ' and mark is: ' + mark)\n    \n    // if\
-    \ the class name is found and the line is less than 2 lines apart\n    // from\
-    \ the \"issued and outstanding\" line, then let's go\n    if (startMark && startMark.index\
-    \ > mark.index - 2) {\n        subDoc = textDocument.slice(startMark.index, startMark.index\
-    \ + 30)\n        // up to 10 classes\n        for (x=0;x<10;x++) {\n         \
-    \   amt = ''\n            // save the location of the class name line\n      \
-    \      sIndex  = startMark.index\n            \n            // extract the values\
-    \ first from the class name line, \n            name    = startMark.findAndExtract(classRe,1)?.value\n\
+    \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // first page of the 10-K form\n\
+    \    // As of February 6, 2020, the registrant had outstanding 653,509,914 shares\
+    \ of Class A Common Stock, $0.0001 par value per share and\n    // 377,427,884\
+    \ shares of Class B Common Stock, $0.0001 par value per share\n    re = '(?i)registrant\\\
+    \\s*had\\\\s*outstanding.*shares\\\\s*of\\\\s*(Class|Common|Preferred)\\\\s*'\n\
+    }\nif (!val) {\n    // \"issued and outstanding\"\n    // CASE 1\n    // Equity:\
+    \ \n    //   Stockholders’ Equity: \n    //     Preferred Stock: $0.01 par value\
+    \ per share, 110,000,000 shares authorized; \n    //       58,250,000 and 50,650,000\
+    \ shares issued and outstanding as of \n    //       December 31, 2019 and December\
+    \ 31, 2018, respectively ...............  1,434,420    1,249,560 \n    //    \
+    \ Common Stock: $0.01 par value per share, 315,000,000 shares authorized, \n \
+    \   //       208,900,758 and 206,425,656 shares issued and outstanding as of \n\
+    \    //       December 31, 2019 and December 31, 2018, respectively ...............\
+    \      2,073        2,051 \n    //////////////////////////////\n    // CASE 2\n\
+    \    // Common stock, $1.00 par value: 750,000,000 shares authorized; 505,221,643\
+    \ and 477,496,499 shares           505,222           477,496\n    // issued and\
+    \ outstanding\n    mark      = textDocument.find('(shares\\\\s*)?issued\\\\s*and\\\
+    \\s*outstanding')\n    return mark\n    amountRe  = '(\\\\d{1,3}(,\\\\d{3})+\\\
+    \\s+)'\n    classRe   = '(?i)(Preferred|Common|Class\\\\s*[A-Z].?[1-9]?)'\n  \
+    \  parRe     = '(?i)\\\\s+(\\\\S\\\\d\\\\.\\\\d{1,4})\\\\s+par\\\\s*value'\n \
+    \   startMark = null\n    name      = ''\n    par       = ''\n    amt       =\
+    \ ''\n    // find a class name on the same line as \"issued and outstanding\"\
+    , or \n    // on the line before that line\n    if (mark) {\n        if (mark\
+    \ =~ classRe){\n            startMark = mark\n        }\n        if (! startMark)\
+    \ {\n            startMark = mark.findPrevious(classRe)\n        }\n    }\n  \
+    \  log.write('at 189, startMark is: ' + startMark + ' and mark is: ' + mark)\n\
+    \    \n    // if the class name is found and the line is less than 2 lines apart\n\
+    \    // from the \"issued and outstanding\" line, then let's go\n    if (startMark\
+    \ && startMark.index > mark.index - 2) {\n        subDoc = textDocument.slice(startMark.index,\
+    \ startMark.index + 30)\n        // up to 10 classes\n        for (x=0;x<10;x++)\
+    \ {\n            amt = ''\n            // save the location of the class name\
+    \ line\n            sIndex  = startMark.index\n            \n            // extract\
+    \ the values first from the class name line, \n            name    = startMark.findAndExtract(classRe,1)?.value\n\
     \            par     = startMark.findAndExtract(parRe,1)?.value\n            \n\
     \            // For Case 2:\n            // is the amount on the same line, or\
     \ on the next?\n            authRe = '(?i)authorized.{1,2}' + amountRe  // don't\
@@ -287,34 +292,39 @@ mappings:
     \ ' + amt)\n            mark = mark.findNext('\\\\S')\n        }        \n   \
     \     if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
-    \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
-    \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
-    \ Stock: $0.01 par value per share, 110,000,000 shares authorized; \n    //  \
-    \     58,250,000 and 50,650,000 shares issued and outstanding as of \n    // \
-    \      December 31, 2019 and December 31, 2018, respectively ............... \
-    \ 1,434,420    1,249,560 \n    //     Common Stock: $0.01 par value per share,\
-    \ 315,000,000 shares authorized, \n    //       208,900,758 and 206,425,656 shares\
-    \ issued and outstanding as of \n    //       December 31, 2019 and December 31,\
-    \ 2018, respectively ...............      2,073        2,051 \n    //////////////////////////////\n\
-    \    // CASE 2\n    // Common stock, $1.00 par value: 750,000,000 shares authorized;\
-    \ 505,221,643 and 477,496,499 shares           505,222           477,496\n   \
-    \ // issued and outstanding\n    mark      = textDocument.find('(shares\\\\s*)?issued\\\
-    \\s*and\\\\s*outstanding')\n    amountRe  = '(\\\\d{1,3}(,\\\\d{3})+\\\\s+)'\n\
-    \    classRe   = '(?i)(Preferred|Common|Class\\\\s*[A-Z].?[1-9]?)'\n    parRe\
-    \     = '(?i)\\\\s+(\\\\S\\\\d\\\\.\\\\d{1,4})\\\\s+par\\\\s*value'\n    startMark\
-    \ = null\n    name      = ''\n    par       = ''\n    amt       = ''\n    // find\
-    \ a class name on the same line as \"issued and outstanding\", or \n    // on\
-    \ the line before that line\n    if (mark) {\n        if (mark =~ classRe){\n\
-    \            startMark = mark\n        }\n        if (! startMark) {\n       \
-    \     startMark = mark.findPrevious(classRe)\n        }\n    }\n    log.write('at\
-    \ 189, startMark is: ' + startMark + ' and mark is: ' + mark)\n    \n    // if\
-    \ the class name is found and the line is less than 2 lines apart\n    // from\
-    \ the \"issued and outstanding\" line, then let's go\n    if (startMark && startMark.index\
-    \ > mark.index - 2) {\n        subDoc = textDocument.slice(startMark.index, startMark.index\
-    \ + 30)\n        // up to 10 classes\n        for (x=0;x<10;x++) {\n         \
-    \   amt = ''\n            // save the location of the class name line\n      \
-    \      sIndex  = startMark.index\n            \n            // extract the values\
-    \ first from the class name line, \n            name    = startMark.findAndExtract(classRe,1)?.value\n\
+    \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // first page of the 10-K form\n\
+    \    // As of February 6, 2020, the registrant had outstanding 653,509,914 shares\
+    \ of Class A Common Stock, $0.0001 par value per share and\n    // 377,427,884\
+    \ shares of Class B Common Stock, $0.0001 par value per share\n    re = '(?i)registrant\\\
+    \\s*had\\\\s*outstanding.*shares\\\\s*of\\\\s*(Class|Common|Preferred)\\\\s*'\n\
+    }\nif (!val) {\n    // \"issued and outstanding\"\n    // CASE 1\n    // Equity:\
+    \ \n    //   Stockholders’ Equity: \n    //     Preferred Stock: $0.01 par value\
+    \ per share, 110,000,000 shares authorized; \n    //       58,250,000 and 50,650,000\
+    \ shares issued and outstanding as of \n    //       December 31, 2019 and December\
+    \ 31, 2018, respectively ...............  1,434,420    1,249,560 \n    //    \
+    \ Common Stock: $0.01 par value per share, 315,000,000 shares authorized, \n \
+    \   //       208,900,758 and 206,425,656 shares issued and outstanding as of \n\
+    \    //       December 31, 2019 and December 31, 2018, respectively ...............\
+    \      2,073        2,051 \n    //////////////////////////////\n    // CASE 2\n\
+    \    // Common stock, $1.00 par value: 750,000,000 shares authorized; 505,221,643\
+    \ and 477,496,499 shares           505,222           477,496\n    // issued and\
+    \ outstanding\n    mark      = textDocument.find('(shares\\\\s*)?issued\\\\s*and\\\
+    \\s*outstanding')\n    return mark\n    amountRe  = '(\\\\d{1,3}(,\\\\d{3})+\\\
+    \\s+)'\n    classRe   = '(?i)(Preferred|Common|Class\\\\s*[A-Z].?[1-9]?)'\n  \
+    \  parRe     = '(?i)\\\\s+(\\\\S\\\\d\\\\.\\\\d{1,4})\\\\s+par\\\\s*value'\n \
+    \   startMark = null\n    name      = ''\n    par       = ''\n    amt       =\
+    \ ''\n    // find a class name on the same line as \"issued and outstanding\"\
+    , or \n    // on the line before that line\n    if (mark) {\n        if (mark\
+    \ =~ classRe){\n            startMark = mark\n        }\n        if (! startMark)\
+    \ {\n            startMark = mark.findPrevious(classRe)\n        }\n    }\n  \
+    \  log.write('at 189, startMark is: ' + startMark + ' and mark is: ' + mark)\n\
+    \    \n    // if the class name is found and the line is less than 2 lines apart\n\
+    \    // from the \"issued and outstanding\" line, then let's go\n    if (startMark\
+    \ && startMark.index > mark.index - 2) {\n        subDoc = textDocument.slice(startMark.index,\
+    \ startMark.index + 30)\n        // up to 10 classes\n        for (x=0;x<10;x++)\
+    \ {\n            amt = ''\n            // save the location of the class name\
+    \ line\n            sIndex  = startMark.index\n            \n            // extract\
+    \ the values first from the class name line, \n            name    = startMark.findAndExtract(classRe,1)?.value\n\
     \            par     = startMark.findAndExtract(parRe,1)?.value\n            \n\
     \            // For Case 2:\n            // is the amount on the same line, or\
     \ on the next?\n            authRe = '(?i)authorized.{1,2}' + amountRe  // don't\
