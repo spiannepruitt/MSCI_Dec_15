@@ -71,21 +71,14 @@ mappings:
     \\s*$'\nsecEndRe    = 'Balance,?\\\\s*end\\\\s*of\\\\s*year'\nstockRe     = '(?i)(Common\
     \ stock|Ordinary Share)'\nsharesRe    = '(?i)Shares'\n// total 63.25 million shares\
     \ of PPL common stock.\nnumbersRe   = '(thousand|([Mm]|[Bb]|[Tt]r)illion)'\namountRe\
-    \    = '[\\\\d\\\\.,]{5,}\\\\s*(?i)'+ numbersRe + '?.{1,10}'\n\n/*\nif (!val)\
-    \ {\n    // first page of the 10-K form\n    // As of February 6, 2020, the registrant\
-    \ had outstanding 653,509,914 shares of Class A Common Stock, $0.0001 par value\
-    \ per share and\n    // 377,427,884 shares of Class B Common Stock, $0.0001 par\
-    \ value per share\n    // \n    // As of January 15, 2020, 122,699,875 shares\
-    \ of common stock were outstanding.\n    //\n    re = '(?i)As\\\\s*of.*outstanding.*shares\\\
-    \\s*of\\\\s*(Class|Common|Preferred)\\\\s*'\n    mark = textDocument.find(re)\n\
-    \    if (mark && mark.value =~ '[\\\\d,]\\\\s*shares\\\\s*of\\\\s*((Class|Common|Preferred).*Stock')\n\
-    }\n*/\n\n///////////////////////////////////////////////////////\n// This format\
-    \ has the years as column headers and the \n// number of shares is the first column\n\
-    ///////////////////////////////////////////////////////\n// secStartRe is on many\
-    \ pages. Find secNextRe FIRST, then go back to secStart\nnextMark    = textDocument.find(secNextRe)\n\
-    startMark   = nextMark ? nextMark.findPrevious(secStartRe) : null\nendMark   \
-    \  = startMark ? startMark.findNext(secEndRe) : null\n\ncolumn      = 0\nif (startMark\
-    \ && isToCEntry(startMark)) {\n    startMark   = startMark.findNext(secStartRe)\n\
+    \    = '[\\\\d\\\\.,]{5,}\\\\s*(?i)'+ numbersRe + '?.{1,10}'\n\nif (! val) {\n\
+    \    val = check10K()\n}\n///////////////////////////////////////////////////////\n\
+    // This format has the years as column headers and the \n// number of shares is\
+    \ the first column\n///////////////////////////////////////////////////////\n\
+    // secStartRe is on many pages. Find secNextRe FIRST, then go back to secStart\n\
+    nextMark    = textDocument.find(secNextRe)\nstartMark   = nextMark ? nextMark.findPrevious(secStartRe)\
+    \ : null\nendMark     = startMark ? startMark.findNext(secEndRe) : null\n\ncolumn\
+    \      = 0\nif (startMark && isToCEntry(startMark)) {\n    startMark   = startMark.findNext(secStartRe)\n\
     \    endMark     = startMark ? startMark.findNext(secEndRe) : null\n}\nif (startMark\
     \ && endMark) {\n\n    subDoc  = textDocument.slice(startMark.index, endMark.index+1)\n\
     \    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -99,62 +92,26 @@ mappings:
     \        valList = endMark.value.split(secEndRe)[1].findAll('\\\\s+([,\\\\.]?\\\
     \\d+)+\\\\s+')\n        if (valList) {\n            val     = valList[column]\n\
     \        }\n        if (units) {\n            val = val + ' ' + units\n      \
-    \  }\n    }\n}\nif (! val) {\n    // At February 25, 2020, we had outstanding\
+    \  }\n    }\n}\n\nif (! val) {\n    // At February 25, 2020, we had outstanding\
     \ 199,734,581 Class A shares, 73,516,244 Class B shares, and options to \n   \
     \ re = 'At.*outstanding\\\\s*(\\\\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*A).*(\\\
-    \\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*B)\\\\s*shares'\n}\nif (! val) {\n\
-    \    // Indicate the number of shares outstanding of each of the Registrant’s\
-    \ classes of common stock: \n    // February 13, 2020—Class A common stock, $5\
-    \ par value                                                                  \
-    \                       700,396 shares \n    // February 13, 2020—Class B common\
-    \ stock, $0.0033 par value                                                   \
-    \                              1,385,994,959 shares    \n    //\n    // also:\n\
-    \    // As of February 14, 2020, there were 541,882,811 shares of common stock,\
-    \ par value $0.01 per share, outstanding.\n    \n    startRe = 'Indicate\\\\s*the\\\
-    \\s*number\\\\s*of\\\\s*shares\\\\s*outstanding.*common'\n    mark    = textDocument.find(startRe)\n\
-    \n    if (mark) {\n        subDoc = textDocument.slice(mark.index, mark.index\
-    \ + 10)\n        re     = '(?i)(Class\\\\s*[A-Z]\\\\s*common\\\\s*(stock)?),?(\\\
-    \\s*\\\\S\\\\d(\\\\.\\\\d{1,5})?)\\\\s*par\\\\s*value\\\\s*'\n        amtRe  =\
-    \ '(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares'\n        lines  = subDoc.findAll(re)\n\
-    \        \n        groups = [1,3]\n    }        \n    if (! mark) {\n        re\
-    \      = 'As\\\\s*of.*there\\\\s*were\\\\s*(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares\\\
-    \\s*of\\\\s*(common\\\\s*stock),\\\\s*par\\\\s*value\\\\s*(\\\\S\\\\d\\\\.\\\\\
-    d{1,4})\\\\s*per\\\\s*share,?\\\\s*outstanding.'\n        \n        // str = '\
-    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
-    \ value $0.01 per share, outstanding.'\n        // if (str =~ re) {\n        //\
-    \     return 'yes'\n        // }\n        amtRe   = '' // using this variable\
-    \ as a flag that amt comes from the original regex,\n                     // not\
-    \ the amtRe regex\n        lines   = textDocument.findAll(re)\n        // these\
-    \ are the capture groups:        \n        // 1: 541,882,811\n        // 2: ,811\n\
-    \        // 3: common stock\n        // 4: $0.01\n\n        groups  = [3,4,1]\n\
-    \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
-    \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
-    \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
-    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
-    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
-    \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
-    \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
-    \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
-    \ ' + listClassShares[0].TotalSharesCommonStock)\n        if (lines) {\n    \n\
-    \                document.variables['listClassShares'] = listClassShares\n   \
-    \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
-    \ : ''\n        }\n    }\n}\nif (! val) {\n    // Preferred Stock, $1.00 par value,\
-    \ Authorized 2,500,000 shares; none issued . . . . . . . .                   \
-    \                                0.0             0.0 \n    // Common Stock, $1.00\
-    \ par value, Authorized 600,000,000 shares; 292,855,100 shares \n    mark = textDocument.find('\\\
-    \\d\\\\s*par\\\\s*value.*Authorized.*issued')\n \n    re = '^(?i)(.*\\\\s*Stock),\\\
-    \\s*(\\\\S\\\\d\\\\.\\\\d{2,5})\\\\s*par\\\\s*value,?\\\\s*.*;\\\\s*(.*)(shares|issued)'\n\
-    \    // if ('Preferred Stock, $1.00 par value, Authorized 2,500,000 shares; none\
-    \ issued' =~ re) {\n    //     return 'yes'\n    // }\n    \n    if (mark && mark.value\
-    \ =~ '(?i)(Stock|shares)') {\n        for (i=0;i<10;i++) {\n            name =\
-    \ mark.findAndExtract(re,1)?.value\n            if (! name) {\n              \
-    \  break\n            }\n            par  = mark.findAndExtract(re,2)?.value\n\
-    \            amt  = mark.findAndExtract(re,3)?.value\n            listClassShares.add([\n\
-    \                \"ShareClassName\"         : name,\n                \"ParValue\"\
-    \               : par,\n                \"TotalSharesCommonStock\" : amt\n   \
-    \             ])\n            log.write('165 name: ' + name + ' par: ' + par +\
-    \ ' amt: ' + amt)\n            mark = mark.findNext('\\\\S')\n        }      \
-    \  \n        if (listClassShares) {\n            document.variables['listClassShares']\
+    \\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*B)\\\\s*shares'\n}\n\nif (! val) {\n\
+    \    // Preferred Stock, $1.00 par value, Authorized 2,500,000 shares; none issued\
+    \ . . . . . . . .                                                   0.0      \
+    \       0.0 \n    // Common Stock, $1.00 par value, Authorized 600,000,000 shares;\
+    \ 292,855,100 shares \n    mark = textDocument.find('\\\\d\\\\s*par\\\\s*value.*Authorized.*issued')\n\
+    \ \n    re = '^(?i)(.*\\\\s*Stock),\\\\s*(\\\\S\\\\d\\\\.\\\\d{2,5})\\\\s*par\\\
+    \\s*value,?\\\\s*.*;\\\\s*(.*)(shares|issued)'\n    // if ('Preferred Stock, $1.00\
+    \ par value, Authorized 2,500,000 shares; none issued' =~ re) {\n    //     return\
+    \ 'yes'\n    // }\n    \n    if (mark && mark.value =~ '(?i)(Stock|shares)') {\n\
+    \        for (i=0;i<10;i++) {\n            name = mark.findAndExtract(re,1)?.value\n\
+    \            if (! name) {\n                break\n            }\n           \
+    \ par  = mark.findAndExtract(re,2)?.value\n            amt  = mark.findAndExtract(re,3)?.value\n\
+    \            listClassShares.add([\n                \"ShareClassName\"       \
+    \  : name,\n                \"ParValue\"               : par,\n              \
+    \  \"TotalSharesCommonStock\" : amt\n                ])\n            log.write('165\
+    \ name: ' + name + ' par: ' + par + ' amt: ' + amt)\n            mark = mark.findNext('\\\
+    \\S')\n        }        \n        if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
     \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
@@ -205,7 +162,46 @@ mappings:
     \ = listClassShares\n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n        }\n    }\n}\nreturn  val\n\ndef isToCEntry(m) {\n    ret = false\n\
     \    // ends with a digit\n    if (m.value =~ '\\\\d\\\\s*$') {\n        ret =\
-    \ true\n    }\n    return ret\n}"
+    \ true\n    }\n    return ret\n}\n\ndef check10K() {\n    val = ''\n    // Indicate\
+    \ by check mark whether the registrant is a shell company\n    // also\n    //\
+    \ Indicate the number of shares outstanding of each of the Registrant’s classes\
+    \ of common stock: \n    // February 13, 2020—Class A common stock, $5 par value\
+    \                                                                            \
+    \             700,396 shares \n    // February 13, 2020—Class B common stock,\
+    \ $0.0033 par value                                                          \
+    \                       1,385,994,959 shares    \n    //\n    // also:\n    //\
+    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
+    \ value $0.01 per share, outstanding.\n    \n    startRe = '(Indicate\\\\s*the\\\
+    \\s*number\\\\s*of\\\\s*shares\\\\s*outstanding.*common' +\n              '|ndicate\\\
+    \\s*by\\\\s*check\\\\s*mark\\\\s*whether\\\\s*the\\\\s*registrant\\\\s*is\\\\\
+    s*a\\\\s*shell\\\\s*company)'\n    mark    = textDocument.find(startRe)\n\n  \
+    \  if (mark) {\n        subDoc = textDocument.slice(mark.index, mark.index + 10)\n\
+    \        re     = '(?i)(Class\\\\s*[A-Z]\\\\s*common\\\\s*(stock)?),?(\\\\s*\\\
+    \\S\\\\d(\\\\.\\\\d{1,5})?)\\\\s*par\\\\s*value\\\\s*'\n        amtRe  = '(\\\\\
+    d{1,3}(,\\\\d{3}){1,4})\\\\s*shares'\n        lines  = subDoc.findAll(re)\n  \
+    \      \n        groups = [1,3]\n    }        \n    if (! mark) {\n        re\
+    \      = 'As\\\\s*of.*there\\\\s*were\\\\s*(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares\\\
+    \\s*of\\\\s*(common\\\\s*stock),\\\\s*par\\\\s*value\\\\s*(\\\\S\\\\d\\\\.\\\\\
+    d{1,4})\\\\s*per\\\\s*share,?\\\\s*outstanding.'\n        \n        // str = '\
+    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
+    \ value $0.01 per share, outstanding.'\n        // if (str =~ re) {\n        //\
+    \     return 'yes'\n        // }\n        amtRe   = '' // using this variable\
+    \ as a flag that amt comes from the original regex,\n                     // not\
+    \ the amtRe regex\n        lines   = textDocument.findAll(re)\n        // these\
+    \ are the capture groups:        \n        // 1: 541,882,811\n        // 2: ,811\n\
+    \        // 3: common stock\n        // 4: $0.01\n\n        groups  = [3,4,1]\n\
+    \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
+    \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
+    \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
+    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
+    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
+    \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
+    \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
+    \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
+    \ ' + listClassShares[0].TotalSharesCommonStock)\n        if (lines) {\n    \n\
+    \                document.variables['listClassShares'] = listClassShares\n   \
+    \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
+    \ : ''\n        }\n    }\n    return val\n}\n"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
@@ -217,21 +213,14 @@ mappings:
     \\s*$'\nsecEndRe    = 'Balance,?\\\\s*end\\\\s*of\\\\s*year'\nstockRe     = '(?i)(Common\
     \ stock|Ordinary Share)'\nsharesRe    = '(?i)Shares'\n// total 63.25 million shares\
     \ of PPL common stock.\nnumbersRe   = '(thousand|([Mm]|[Bb]|[Tt]r)illion)'\namountRe\
-    \    = '[\\\\d\\\\.,]{5,}\\\\s*(?i)'+ numbersRe + '?.{1,10}'\n\n/*\nif (!val)\
-    \ {\n    // first page of the 10-K form\n    // As of February 6, 2020, the registrant\
-    \ had outstanding 653,509,914 shares of Class A Common Stock, $0.0001 par value\
-    \ per share and\n    // 377,427,884 shares of Class B Common Stock, $0.0001 par\
-    \ value per share\n    // \n    // As of January 15, 2020, 122,699,875 shares\
-    \ of common stock were outstanding.\n    //\n    re = '(?i)As\\\\s*of.*outstanding.*shares\\\
-    \\s*of\\\\s*(Class|Common|Preferred)\\\\s*'\n    mark = textDocument.find(re)\n\
-    \    if (mark && mark.value =~ '[\\\\d,]\\\\s*shares\\\\s*of\\\\s*((Class|Common|Preferred).*Stock')\n\
-    }\n*/\n\n///////////////////////////////////////////////////////\n// This format\
-    \ has the years as column headers and the \n// number of shares is the first column\n\
-    ///////////////////////////////////////////////////////\n// secStartRe is on many\
-    \ pages. Find secNextRe FIRST, then go back to secStart\nnextMark    = textDocument.find(secNextRe)\n\
-    startMark   = nextMark ? nextMark.findPrevious(secStartRe) : null\nendMark   \
-    \  = startMark ? startMark.findNext(secEndRe) : null\n\ncolumn      = 0\nif (startMark\
-    \ && isToCEntry(startMark)) {\n    startMark   = startMark.findNext(secStartRe)\n\
+    \    = '[\\\\d\\\\.,]{5,}\\\\s*(?i)'+ numbersRe + '?.{1,10}'\n\nif (! val) {\n\
+    \    val = check10K()\n}\n///////////////////////////////////////////////////////\n\
+    // This format has the years as column headers and the \n// number of shares is\
+    \ the first column\n///////////////////////////////////////////////////////\n\
+    // secStartRe is on many pages. Find secNextRe FIRST, then go back to secStart\n\
+    nextMark    = textDocument.find(secNextRe)\nstartMark   = nextMark ? nextMark.findPrevious(secStartRe)\
+    \ : null\nendMark     = startMark ? startMark.findNext(secEndRe) : null\n\ncolumn\
+    \      = 0\nif (startMark && isToCEntry(startMark)) {\n    startMark   = startMark.findNext(secStartRe)\n\
     \    endMark     = startMark ? startMark.findNext(secEndRe) : null\n}\nif (startMark\
     \ && endMark) {\n\n    subDoc  = textDocument.slice(startMark.index, endMark.index+1)\n\
     \    log.write('\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -245,62 +234,26 @@ mappings:
     \        valList = endMark.value.split(secEndRe)[1].findAll('\\\\s+([,\\\\.]?\\\
     \\d+)+\\\\s+')\n        if (valList) {\n            val     = valList[column]\n\
     \        }\n        if (units) {\n            val = val + ' ' + units\n      \
-    \  }\n    }\n}\nif (! val) {\n    // At February 25, 2020, we had outstanding\
+    \  }\n    }\n}\n\nif (! val) {\n    // At February 25, 2020, we had outstanding\
     \ 199,734,581 Class A shares, 73,516,244 Class B shares, and options to \n   \
     \ re = 'At.*outstanding\\\\s*(\\\\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*A).*(\\\
-    \\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*B)\\\\s*shares'\n}\nif (! val) {\n\
-    \    // Indicate the number of shares outstanding of each of the Registrant’s\
-    \ classes of common stock: \n    // February 13, 2020—Class A common stock, $5\
-    \ par value                                                                  \
-    \                       700,396 shares \n    // February 13, 2020—Class B common\
-    \ stock, $0.0033 par value                                                   \
-    \                              1,385,994,959 shares    \n    //\n    // also:\n\
-    \    // As of February 14, 2020, there were 541,882,811 shares of common stock,\
-    \ par value $0.01 per share, outstanding.\n    \n    startRe = 'Indicate\\\\s*the\\\
-    \\s*number\\\\s*of\\\\s*shares\\\\s*outstanding.*common'\n    mark    = textDocument.find(startRe)\n\
-    \n    if (mark) {\n        subDoc = textDocument.slice(mark.index, mark.index\
-    \ + 10)\n        re     = '(?i)(Class\\\\s*[A-Z]\\\\s*common\\\\s*(stock)?),?(\\\
-    \\s*\\\\S\\\\d(\\\\.\\\\d{1,5})?)\\\\s*par\\\\s*value\\\\s*'\n        amtRe  =\
-    \ '(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares'\n        lines  = subDoc.findAll(re)\n\
-    \        \n        groups = [1,3]\n    }        \n    if (! mark) {\n        re\
-    \      = 'As\\\\s*of.*there\\\\s*were\\\\s*(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares\\\
-    \\s*of\\\\s*(common\\\\s*stock),\\\\s*par\\\\s*value\\\\s*(\\\\S\\\\d\\\\.\\\\\
-    d{1,4})\\\\s*per\\\\s*share,?\\\\s*outstanding.'\n        \n        // str = '\
-    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
-    \ value $0.01 per share, outstanding.'\n        // if (str =~ re) {\n        //\
-    \     return 'yes'\n        // }\n        amtRe   = '' // using this variable\
-    \ as a flag that amt comes from the original regex,\n                     // not\
-    \ the amtRe regex\n        lines   = textDocument.findAll(re)\n        // these\
-    \ are the capture groups:        \n        // 1: 541,882,811\n        // 2: ,811\n\
-    \        // 3: common stock\n        // 4: $0.01\n\n        groups  = [3,4,1]\n\
-    \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
-    \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
-    \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
-    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
-    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
-    \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
-    \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
-    \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
-    \ ' + listClassShares[0].TotalSharesCommonStock)\n        if (lines) {\n    \n\
-    \                document.variables['listClassShares'] = listClassShares\n   \
-    \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
-    \ : ''\n        }\n    }\n}\nif (! val) {\n    // Preferred Stock, $1.00 par value,\
-    \ Authorized 2,500,000 shares; none issued . . . . . . . .                   \
-    \                                0.0             0.0 \n    // Common Stock, $1.00\
-    \ par value, Authorized 600,000,000 shares; 292,855,100 shares \n    mark = textDocument.find('\\\
-    \\d\\\\s*par\\\\s*value.*Authorized.*issued')\n \n    re = '^(?i)(.*\\\\s*Stock),\\\
-    \\s*(\\\\S\\\\d\\\\.\\\\d{2,5})\\\\s*par\\\\s*value,?\\\\s*.*;\\\\s*(.*)(shares|issued)'\n\
-    \    // if ('Preferred Stock, $1.00 par value, Authorized 2,500,000 shares; none\
-    \ issued' =~ re) {\n    //     return 'yes'\n    // }\n    \n    if (mark && mark.value\
-    \ =~ '(?i)(Stock|shares)') {\n        for (i=0;i<10;i++) {\n            name =\
-    \ mark.findAndExtract(re,1)?.value\n            if (! name) {\n              \
-    \  break\n            }\n            par  = mark.findAndExtract(re,2)?.value\n\
-    \            amt  = mark.findAndExtract(re,3)?.value\n            listClassShares.add([\n\
-    \                \"ShareClassName\"         : name,\n                \"ParValue\"\
-    \               : par,\n                \"TotalSharesCommonStock\" : amt\n   \
-    \             ])\n            log.write('165 name: ' + name + ' par: ' + par +\
-    \ ' amt: ' + amt)\n            mark = mark.findNext('\\\\S')\n        }      \
-    \  \n        if (listClassShares) {\n            document.variables['listClassShares']\
+    \\d{1,3}(,\\\\d{3})+)\\\\s*((?i)Class\\\\s*B)\\\\s*shares'\n}\n\nif (! val) {\n\
+    \    // Preferred Stock, $1.00 par value, Authorized 2,500,000 shares; none issued\
+    \ . . . . . . . .                                                   0.0      \
+    \       0.0 \n    // Common Stock, $1.00 par value, Authorized 600,000,000 shares;\
+    \ 292,855,100 shares \n    mark = textDocument.find('\\\\d\\\\s*par\\\\s*value.*Authorized.*issued')\n\
+    \ \n    re = '^(?i)(.*\\\\s*Stock),\\\\s*(\\\\S\\\\d\\\\.\\\\d{2,5})\\\\s*par\\\
+    \\s*value,?\\\\s*.*;\\\\s*(.*)(shares|issued)'\n    // if ('Preferred Stock, $1.00\
+    \ par value, Authorized 2,500,000 shares; none issued' =~ re) {\n    //     return\
+    \ 'yes'\n    // }\n    \n    if (mark && mark.value =~ '(?i)(Stock|shares)') {\n\
+    \        for (i=0;i<10;i++) {\n            name = mark.findAndExtract(re,1)?.value\n\
+    \            if (! name) {\n                break\n            }\n           \
+    \ par  = mark.findAndExtract(re,2)?.value\n            amt  = mark.findAndExtract(re,3)?.value\n\
+    \            listClassShares.add([\n                \"ShareClassName\"       \
+    \  : name,\n                \"ParValue\"               : par,\n              \
+    \  \"TotalSharesCommonStock\" : amt\n                ])\n            log.write('165\
+    \ name: ' + name + ' par: ' + par + ' amt: ' + amt)\n            mark = mark.findNext('\\\
+    \\S')\n        }        \n        if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
     \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
@@ -351,7 +304,46 @@ mappings:
     \ = listClassShares\n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n        }\n    }\n}\nreturn  val\n\ndef isToCEntry(m) {\n    ret = false\n\
     \    // ends with a digit\n    if (m.value =~ '\\\\d\\\\s*$') {\n        ret =\
-    \ true\n    }\n    return ret\n}\n```\n"
+    \ true\n    }\n    return ret\n}\n\ndef check10K() {\n    val = ''\n    // Indicate\
+    \ by check mark whether the registrant is a shell company\n    // also\n    //\
+    \ Indicate the number of shares outstanding of each of the Registrant’s classes\
+    \ of common stock: \n    // February 13, 2020—Class A common stock, $5 par value\
+    \                                                                            \
+    \             700,396 shares \n    // February 13, 2020—Class B common stock,\
+    \ $0.0033 par value                                                          \
+    \                       1,385,994,959 shares    \n    //\n    // also:\n    //\
+    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
+    \ value $0.01 per share, outstanding.\n    \n    startRe = '(Indicate\\\\s*the\\\
+    \\s*number\\\\s*of\\\\s*shares\\\\s*outstanding.*common' +\n              '|ndicate\\\
+    \\s*by\\\\s*check\\\\s*mark\\\\s*whether\\\\s*the\\\\s*registrant\\\\s*is\\\\\
+    s*a\\\\s*shell\\\\s*company)'\n    mark    = textDocument.find(startRe)\n\n  \
+    \  if (mark) {\n        subDoc = textDocument.slice(mark.index, mark.index + 10)\n\
+    \        re     = '(?i)(Class\\\\s*[A-Z]\\\\s*common\\\\s*(stock)?),?(\\\\s*\\\
+    \\S\\\\d(\\\\.\\\\d{1,5})?)\\\\s*par\\\\s*value\\\\s*'\n        amtRe  = '(\\\\\
+    d{1,3}(,\\\\d{3}){1,4})\\\\s*shares'\n        lines  = subDoc.findAll(re)\n  \
+    \      \n        groups = [1,3]\n    }        \n    if (! mark) {\n        re\
+    \      = 'As\\\\s*of.*there\\\\s*were\\\\s*(\\\\d{1,3}(,\\\\d{3}){1,4})\\\\s*shares\\\
+    \\s*of\\\\s*(common\\\\s*stock),\\\\s*par\\\\s*value\\\\s*(\\\\S\\\\d\\\\.\\\\\
+    d{1,4})\\\\s*per\\\\s*share,?\\\\s*outstanding.'\n        \n        // str = '\
+    \ As of February 14, 2020, there were 541,882,811 shares of common stock, par\
+    \ value $0.01 per share, outstanding.'\n        // if (str =~ re) {\n        //\
+    \     return 'yes'\n        // }\n        amtRe   = '' // using this variable\
+    \ as a flag that amt comes from the original regex,\n                     // not\
+    \ the amtRe regex\n        lines   = textDocument.findAll(re)\n        // these\
+    \ are the capture groups:        \n        // 1: 541,882,811\n        // 2: ,811\n\
+    \        // 3: common stock\n        // 4: $0.01\n\n        groups  = [3,4,1]\n\
+    \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
+    \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
+    \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
+    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
+    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
+    \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
+    \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
+    \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
+    \ ' + listClassShares[0].TotalSharesCommonStock)\n        if (lines) {\n    \n\
+    \                document.variables['listClassShares'] = listClassShares\n   \
+    \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
+    \ : ''\n        }\n    }\n    return val\n}\n\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
