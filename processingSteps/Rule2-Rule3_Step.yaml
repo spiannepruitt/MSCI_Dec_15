@@ -130,8 +130,8 @@ mappings:
     \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
     \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
     \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
-    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('name: ' + name\
-    \ + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
+    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
+    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
     \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
     \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
     \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
@@ -152,9 +152,9 @@ mappings:
     \            amt  = mark.findAndExtract(re,3)?.value\n            listClassShares.add([\n\
     \                \"ShareClassName\"         : name,\n                \"ParValue\"\
     \               : par,\n                \"TotalSharesCommonStock\" : amt\n   \
-    \             ])\n            log.write('name: ' + name + ' par: ' + par + ' amt:\
-    \ ' + amt)\n            mark = mark.findNext('\\\\S')\n        }        \n   \
-    \     if (listClassShares) {\n            document.variables['listClassShares']\
+    \             ])\n            log.write('165 name: ' + name + ' par: ' + par +\
+    \ ' amt: ' + amt)\n            mark = mark.findNext('\\\\S')\n        }      \
+    \  \n        if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
     \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
@@ -276,8 +276,8 @@ mappings:
     \    }\n    lines.each{ it ->\n        amt  = ''\n        name = it.findAndExtract(re,groups[0])\n\
     \        par  = it.findAndExtract(re,groups[1])\n        if (amtRe) {\n      \
     \      amt  = it.findAndExtract(amtRe,1)\n        } else {\n            amt =\
-    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('name: ' + name\
-    \ + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
+    \ it.findAndExtract(re, groups[2])\n        }\n        log.write('125 name: '\
+    \ + name + ' par: ' + par + ' amt: ' + amt)\n        \n        listClassShares.add([\n\
     \            \"ShareClassName\"         : name,\n            \"ParValue\"    \
     \           : par,\n            \"TotalSharesCommonStock\" : amt\n           \
     \ ])\n            log.write('added ' + listClassShares.last())\n        log.write('listClassShares[0].TotalSharesCommonStock:\
@@ -298,9 +298,9 @@ mappings:
     \            amt  = mark.findAndExtract(re,3)?.value\n            listClassShares.add([\n\
     \                \"ShareClassName\"         : name,\n                \"ParValue\"\
     \               : par,\n                \"TotalSharesCommonStock\" : amt\n   \
-    \             ])\n            log.write('name: ' + name + ' par: ' + par + ' amt:\
-    \ ' + amt)\n            mark = mark.findNext('\\\\S')\n        }        \n   \
-    \     if (listClassShares) {\n            document.variables['listClassShares']\
+    \             ])\n            log.write('165 name: ' + name + ' par: ' + par +\
+    \ ' amt: ' + amt)\n            mark = mark.findNext('\\\\S')\n        }      \
+    \  \n        if (listClassShares) {\n            document.variables['listClassShares']\
     \ = listClassShares\n                  \n            val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n\n        }\n    }\n}\nif (!val) {\n    // \"issued and outstanding\"\n\
     \    // CASE 1\n    // Equity: \n    //   Stockholders’ Equity: \n    //     Preferred\
