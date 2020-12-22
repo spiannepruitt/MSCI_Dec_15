@@ -69,35 +69,36 @@ mappings:
     \            name = mStr.split('\\\\s{3,}')[0].trim()\n            log.write('at\
     \ 107, amt is ' + amt + ' and name is ' + name)\n            \n            //\
     \ now concatenate all the components of the name together. It can be wrapped on\
-    \ \n            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
-    \            holderList.add([\n                \"Holder\" : name,\n          \
-    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
-    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
-    // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
-    \                            registered number 102498. The provisions regulating\
-    \ the operations \n//   its nominee Guaranty                                 \
-    \                of the company, known as its ‘objects’, were historically stated\
-    \ in a \n//   Nominees Limited                 5,496,296,263             27.13\
-    \     company’s memorandum. The Act abolished the need to have object \n// BlackRock,\
-    \ Inc.                     1,531,724,983              7.60     provisions and\
-    \ so at the AGM held on 15 April 2010 shareholders \n// The Vanguard Group, Inc\
-    \              813,197,253               4.00\n\ndef getHolder(m,end) {\n    //\
-    \ log.write('in getHolder with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\
-    \n    retList = [null,null,null]\n    \n    sMark = m.findNext(secondRe)\n   \
-    \ \n    if (sMark && sMark.index < end.index) {\n        \n        s = sMark.value.trim()\
-    \ // remove leading whitespace\n        \n        s = s.split('\\\\s{2,}')[0].trim()\n\
-    \        if (s.endsWith(',')) {\n            s = s.take(s.length()-1)\n      \
-    \  }\n        // log.write('here at 55: ' + s)\n        \n    }\n    \n    sMark\
-    \ = m.findNext(largeRe)\n    \n    if (sMark && sMark.index < end.index) {\n \
-    \       \n        n = sMark.value.trim() // remove leading whitespace\n      \
-    \  \n        if (n.split('\\\\s{2,}').size()>1){\n            n = n.split('\\\\\
-    s{2,}')[1].trim()\n        }\n    }\n    if (s) {\n        retList = []\n    \
-    \    retList.add(sMark)\n        retList.add(s)\n        retList.add(n)\n    }\n\
-    \    return retList\n}\n\ndef gatherName(n, currentLine, colLength) {\n    go\
-    \ = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n \
-    \   \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\S')\n\
-    \    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex is\
-    \ ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
+    \ \n            // up to 4 lines\n            log.write('calling gatherName with\
+    \ name: ' + name, ' m: ' + m + 'firstColLength: ' + firstColLength)\n        \
+    \    name = gatherName(name, m, firstColLength)\n            holderList.add([\n\
+    \                \"Holder\" : name,\n                \"Amount\" : amt ? amt.trim()\
+    \ : ''\n                ])\n        }\n        \n    }\n}\n\nreturn holderList\n\
+    \n/*****************************************************/\n// JPMorgan Chase Bank\
+    \ N.A., \n//   depositary for ADSs, through                                  \
+    \       registered number 102498. The provisions regulating the operations \n\
+    //   its nominee Guaranty                                                 of the\
+    \ company, known as its ‘objects’, were historically stated in a \n//   Nominees\
+    \ Limited                 5,496,296,263             27.13     company’s memorandum.\
+    \ The Act abolished the need to have object \n// BlackRock, Inc.             \
+    \        1,531,724,983              7.60     provisions and so at the AGM held\
+    \ on 15 April 2010 shareholders \n// The Vanguard Group, Inc              813,197,253\
+    \               4.00\n\ndef getHolder(m,end) {\n    // log.write('in getHolder\
+    \ with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\n    retList = [null,null,null]\n\
+    \    \n    sMark = m.findNext(secondRe)\n    \n    if (sMark && sMark.index <\
+    \ end.index) {\n        \n        s = sMark.value.trim() // remove leading whitespace\n\
+    \        \n        s = s.split('\\\\s{2,}')[0].trim()\n        if (s.endsWith(','))\
+    \ {\n            s = s.take(s.length()-1)\n        }\n        // log.write('here\
+    \ at 55: ' + s)\n        \n    }\n    \n    sMark = m.findNext(largeRe)\n    \n\
+    \    if (sMark && sMark.index < end.index) {\n        \n        n = sMark.value.trim()\
+    \ // remove leading whitespace\n        \n        if (n.split('\\\\s{2,}').size()>1){\n\
+    \            n = n.split('\\\\s{2,}')[1].trim()\n        }\n    }\n    if (s)\
+    \ {\n        retList = []\n        retList.add(sMark)\n        retList.add(s)\n\
+    \        retList.add(n)\n    }\n    return retList\n}\n\ndef gatherName(n, currentLine,\
+    \ colLength) {\n    go = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n\
+    \    \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\\
+    S')\n    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex\
+    \ is ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
     \        // if not on the last moneyRow, search down to next moneyRow\n      \
     \  // if on the last moneyRow, search until empty\n        go = false\n      \
     \  if (nextMoneyRow) {\n            if (mark && mark.index < nextMoneyRow.index)\
@@ -180,35 +181,36 @@ mappings:
     \            name = mStr.split('\\\\s{3,}')[0].trim()\n            log.write('at\
     \ 107, amt is ' + amt + ' and name is ' + name)\n            \n            //\
     \ now concatenate all the components of the name together. It can be wrapped on\
-    \ \n            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
-    \            holderList.add([\n                \"Holder\" : name,\n          \
-    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
-    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
-    // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
-    \                            registered number 102498. The provisions regulating\
-    \ the operations \n//   its nominee Guaranty                                 \
-    \                of the company, known as its ‘objects’, were historically stated\
-    \ in a \n//   Nominees Limited                 5,496,296,263             27.13\
-    \     company’s memorandum. The Act abolished the need to have object \n// BlackRock,\
-    \ Inc.                     1,531,724,983              7.60     provisions and\
-    \ so at the AGM held on 15 April 2010 shareholders \n// The Vanguard Group, Inc\
-    \              813,197,253               4.00\n\ndef getHolder(m,end) {\n    //\
-    \ log.write('in getHolder with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\
-    \n    retList = [null,null,null]\n    \n    sMark = m.findNext(secondRe)\n   \
-    \ \n    if (sMark && sMark.index < end.index) {\n        \n        s = sMark.value.trim()\
-    \ // remove leading whitespace\n        \n        s = s.split('\\\\s{2,}')[0].trim()\n\
-    \        if (s.endsWith(',')) {\n            s = s.take(s.length()-1)\n      \
-    \  }\n        // log.write('here at 55: ' + s)\n        \n    }\n    \n    sMark\
-    \ = m.findNext(largeRe)\n    \n    if (sMark && sMark.index < end.index) {\n \
-    \       \n        n = sMark.value.trim() // remove leading whitespace\n      \
-    \  \n        if (n.split('\\\\s{2,}').size()>1){\n            n = n.split('\\\\\
-    s{2,}')[1].trim()\n        }\n    }\n    if (s) {\n        retList = []\n    \
-    \    retList.add(sMark)\n        retList.add(s)\n        retList.add(n)\n    }\n\
-    \    return retList\n}\n\ndef gatherName(n, currentLine, colLength) {\n    go\
-    \ = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n \
-    \   \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\S')\n\
-    \    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex is\
-    \ ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
+    \ \n            // up to 4 lines\n            log.write('calling gatherName with\
+    \ name: ' + name, ' m: ' + m + 'firstColLength: ' + firstColLength)\n        \
+    \    name = gatherName(name, m, firstColLength)\n            holderList.add([\n\
+    \                \"Holder\" : name,\n                \"Amount\" : amt ? amt.trim()\
+    \ : ''\n                ])\n        }\n        \n    }\n}\n\nreturn holderList\n\
+    \n/*****************************************************/\n// JPMorgan Chase Bank\
+    \ N.A., \n//   depositary for ADSs, through                                  \
+    \       registered number 102498. The provisions regulating the operations \n\
+    //   its nominee Guaranty                                                 of the\
+    \ company, known as its ‘objects’, were historically stated in a \n//   Nominees\
+    \ Limited                 5,496,296,263             27.13     company’s memorandum.\
+    \ The Act abolished the need to have object \n// BlackRock, Inc.             \
+    \        1,531,724,983              7.60     provisions and so at the AGM held\
+    \ on 15 April 2010 shareholders \n// The Vanguard Group, Inc              813,197,253\
+    \               4.00\n\ndef getHolder(m,end) {\n    // log.write('in getHolder\
+    \ with ' + m + ' and ' + end)\n    s  = ''\n    n  = ''\n\n    retList = [null,null,null]\n\
+    \    \n    sMark = m.findNext(secondRe)\n    \n    if (sMark && sMark.index <\
+    \ end.index) {\n        \n        s = sMark.value.trim() // remove leading whitespace\n\
+    \        \n        s = s.split('\\\\s{2,}')[0].trim()\n        if (s.endsWith(','))\
+    \ {\n            s = s.take(s.length()-1)\n        }\n        // log.write('here\
+    \ at 55: ' + s)\n        \n    }\n    \n    sMark = m.findNext(largeRe)\n    \n\
+    \    if (sMark && sMark.index < end.index) {\n        \n        n = sMark.value.trim()\
+    \ // remove leading whitespace\n        \n        if (n.split('\\\\s{2,}').size()>1){\n\
+    \            n = n.split('\\\\s{2,}')[1].trim()\n        }\n    }\n    if (s)\
+    \ {\n        retList = []\n        retList.add(sMark)\n        retList.add(s)\n\
+    \        retList.add(n)\n    }\n    return retList\n}\n\ndef gatherName(n, currentLine,\
+    \ colLength) {\n    go = false\n    nextMoneyRow = moneyRows.find{it.index > currentLine.index}\n\
+    \    \n    // up to 3 additional lines\n    mark = currentLine.findNext('\\\\\
+    S')\n    compareIndex = mark.index - 1\n    log.write('before loop, compareIndex\
+    \ is ' + compareIndex)\n    for (x=0;x<3;x++) {\n        log.write('x is ' + x)\n\
     \        // if not on the last moneyRow, search down to next moneyRow\n      \
     \  // if on the last moneyRow, search until empty\n        go = false\n      \
     \  if (nextMoneyRow) {\n            if (mark && mark.index < nextMoneyRow.index)\
