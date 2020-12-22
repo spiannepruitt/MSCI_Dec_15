@@ -112,8 +112,9 @@ mappings:
     \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
     \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
     \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
-    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        if (firstColStr) {\n            log.write('firstColStr:\
-    \ ***' + firstColStr + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
+    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        log.write('mark at 215 is ' + mark)\n\
+    \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
+    \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
     \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
     \ retLen\n}"
   name: "Groovy Script (Column)"
@@ -218,8 +219,9 @@ mappings:
     \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
     \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
     \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
-    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        if (firstColStr) {\n            log.write('firstColStr:\
-    \ ***' + firstColStr + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
+    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        log.write('mark at 215 is ' + mark)\n\
+    \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
+    \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
     \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
     \ retLen\n}\n```\n"
   implementation: "groovyScriptColumn"
