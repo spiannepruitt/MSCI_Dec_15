@@ -106,12 +106,14 @@ mappings:
     \ is now: ' + n)\n            }\n        } else {break}\n        compareIndex\
     \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
     \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
-    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
-    \\s*of\\\\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if\
-    \ (mark) {\n        str     = mark.value\n        orgLen  = str.length()\n   \
-    \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
-    \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
-    \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
+    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    // Name of shareholders(Full\
+    \ name)\n    // Name of shareholders\n    mark    = sDoc.find('(?i)Name\\\\s*of\\\
+    \\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if (mark)\
+    \ {\n        str     = mark.value\n        orgLen  = str.length()\n        log.write('orgLen:\
+    \ ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
+    \\s{3,}')[0]\n        firstColStrTrimmed = java.util.regex.Pattern.quote(firstColStrTrimmed)\n\
+    \        \n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed +\
+    \ '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
     \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        log.write('mark at 215 is ' + mark)\n\
     \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
@@ -213,12 +215,14 @@ mappings:
     \ is now: ' + n)\n            }\n        } else {break}\n        compareIndex\
     \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
     \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
-    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
-    \\s*of\\\\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if\
-    \ (mark) {\n        str     = mark.value\n        orgLen  = str.length()\n   \
-    \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
-    \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
-    \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
+    \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    // Name of shareholders(Full\
+    \ name)\n    // Name of shareholders\n    mark    = sDoc.find('(?i)Name\\\\s*of\\\
+    \\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if (mark)\
+    \ {\n        str     = mark.value\n        orgLen  = str.length()\n        log.write('orgLen:\
+    \ ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
+    \\s{3,}')[0]\n        firstColStrTrimmed = java.util.regex.Pattern.quote(firstColStrTrimmed)\n\
+    \        \n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed +\
+    \ '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
     \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        log.write('mark at 215 is ' + mark)\n\
     \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
