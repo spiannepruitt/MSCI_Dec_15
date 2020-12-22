@@ -60,16 +60,18 @@ mappings:
     d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index, lastMark.index)\n\
     \        \n        log.write('subDoc is: ' )\n        log.write(subDoc.getChildren().join('\\\
     n'))\n        \n        firstColLength = getFirstColLength(subDoc)\n        log.write('firstColLength:\
-    \ ' + firstColLength)\n        // collect all the rows with large money\n    \
-    \    moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\
+    \ ' + firstColLength)\n        \n        // collect all the rows with large money\n\
+    \        moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\
     \            log.write('moneyRow is ' + m)\n            // holder is first column\
-    \ separated from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
-    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
-    \ concatenate all the components of the name together. It can be wrapped on \n\
-    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
-    \            holderList.add([\n                \"Holder\" : name,\n          \
-    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
-    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    \ separated from second column by at least 3 spaces\n            // drop leading\
+    \ spaces\n            mStr = m.value.drop(lTrim(m.value)\n            log.write('mStr\
+    \ is ' + mStr)\n            amt = m.value.findAll(largeMoneyRe)[0]\n         \
+    \   name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now concatenate\
+    \ all the components of the name together. It can be wrapped on \n           \
+    \ // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n \
+    \           holderList.add([\n                \"Holder\" : name,\n           \
+    \     \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n    \
+    \    \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
     // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
     \                            registered number 102498. The provisions regulating\
     \ the operations \n//   its nominee Guaranty                                 \
@@ -168,16 +170,18 @@ mappings:
     d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index, lastMark.index)\n\
     \        \n        log.write('subDoc is: ' )\n        log.write(subDoc.getChildren().join('\\\
     n'))\n        \n        firstColLength = getFirstColLength(subDoc)\n        log.write('firstColLength:\
-    \ ' + firstColLength)\n        // collect all the rows with large money\n    \
-    \    moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\
+    \ ' + firstColLength)\n        \n        // collect all the rows with large money\n\
+    \        moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\
     \            log.write('moneyRow is ' + m)\n            // holder is first column\
-    \ separated from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
-    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
-    \ concatenate all the components of the name together. It can be wrapped on \n\
-    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
-    \            holderList.add([\n                \"Holder\" : name,\n          \
-    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
-    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    \ separated from second column by at least 3 spaces\n            // drop leading\
+    \ spaces\n            mStr = m.value.drop(lTrim(m.value)\n            log.write('mStr\
+    \ is ' + mStr)\n            amt = m.value.findAll(largeMoneyRe)[0]\n         \
+    \   name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now concatenate\
+    \ all the components of the name together. It can be wrapped on \n           \
+    \ // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n \
+    \           holderList.add([\n                \"Holder\" : name,\n           \
+    \     \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n    \
+    \    \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
     // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
     \                            registered number 102498. The provisions regulating\
     \ the operations \n//   its nominee Guaranty                                 \
