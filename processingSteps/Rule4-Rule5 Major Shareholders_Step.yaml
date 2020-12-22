@@ -119,8 +119,9 @@ mappings:
     \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
     \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
-    \ retLen\n}\ndef lTrim(s) {\n    len = 0\n    s.each{it ->\n    if (isWhitespace(it))\
-    \ {\n        len ++\n    }\n    return s.drop(len)\n}"
+    \ retLen\n}\ndef lTrim(s) {\n    len = 0\n    for (i=0;i<s.length();i++) {\n \
+    \       if (s[i].isAllWhitespace()) {\n            len ++\n        } else {break;}\n\
+    \    }\n    return s.drop(len)\n}"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
@@ -230,8 +231,9 @@ mappings:
     \        if (firstColStr) {\n            log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
     \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
-    \ retLen\n}\ndef lTrim(s) {\n    len = 0\n    s.each{it ->\n    if (isWhitespace(it))\
-    \ {\n        len ++\n    }\n    return s.drop(len)\n}\n```\n"
+    \ retLen\n}\ndef lTrim(s) {\n    len = 0\n    for (i=0;i<s.length();i++) {\n \
+    \       if (s[i].isAllWhitespace()) {\n            len ++\n        } else {break;}\n\
+    \    }\n    return s.drop(len)\n}\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
