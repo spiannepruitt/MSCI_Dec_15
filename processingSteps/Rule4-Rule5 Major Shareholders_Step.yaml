@@ -109,7 +109,7 @@ mappings:
     \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
     \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\n// Section Header - \"Major Shareholders\"\n// \"1. Search for the primary\
     \ keyword in the document\n// 2. If keyword exists, then collect all company names\
@@ -206,8 +206,8 @@ mappings:
     \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
     \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
     \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}\n```\n"
+  implementation: "groovyScriptColumn"
   plugin: "groovy"
-  grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -247,7 +247,7 @@ mappings:
     \ else {\n            retIndex = m.index\n            break;\n        }\n    \
     \        \n    }\n    return retIndex\n}"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nif (holderList1) {\n    return []\n}\nholderList = []\n/*\nINTEREST OF SUBSTANTIAL\
     \ SHAREHOLDERS (LONG POSITION) \n \nTo the knowledge of the Company, as at 31\
@@ -275,8 +275,8 @@ mappings:
     \ m.index + 3).value.trim()) {\n            m = m.findNext(blankRe)\n        }\
     \ else {\n            retIndex = m.index\n            break;\n        }\n    \
     \        \n    }\n    return retIndex\n}\n```\n"
+  implementation: "groovyScriptColumn"
   plugin: "groovy"
-  grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -291,11 +291,11 @@ mappings:
   inputDateFormat: "dd/MM/yyyy"
   script: "return"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nreturn\n```\n"
+  implementation: "groovyScriptColumn"
   plugin: "groovy"
-  grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -318,7 +318,7 @@ mappings:
     \ ''\n        ])\n    log.write('added returnRow: ' + returnRow.last())\n}\nreturn\
     \ returnRow"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nrow = holderList1\nif (!row) {\n    row = holderList2\n}\nreturnRow = []\n\
     row.each{it ->\n    returnRow.add([\n        \"Filename\"      : document.filename,\n\
@@ -329,8 +329,8 @@ mappings:
     \ : varCompany,\n        \"Shareholder\"   : '',\n        \"Amount\"        :\
     \ ''\n        ])\n    log.write('added returnRow: ' + returnRow.last())\n}\nreturn\
     \ returnRow\n```\n"
+  implementation: "groovyScriptColumn"
   plugin: "groovy"
-  grouping: "Scripting"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptDataset>
@@ -342,12 +342,12 @@ mappings:
   previewEnabled: true
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
+  implementation: "groovyScriptDataset"
   plugin: "groovy"
   mappingType: "DATASET"
-  grouping: "Scripting"
   uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
@@ -364,10 +364,10 @@ datasetMappings:
   previewEnabled: true
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
+  grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
+  implementation: "groovyScriptDataset"
   plugin: "groovy"
   mappingType: "DATASET"
-  grouping: "Scripting"
   uiContribution: "groovyScriptDataset-mapping-settings"
