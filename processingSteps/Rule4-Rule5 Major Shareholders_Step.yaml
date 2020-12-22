@@ -48,28 +48,28 @@ mappings:
     \\s*.*top\\\\s*(10|ten)\\\\s*shareholders\\\\s*' + \n                      '|Shareholdings\\\
     \\s*of\\\\s*Top\\\\s*10\\\\s*Ordinary\\\\s*Shareholders\\\\s*$' +\n          \
     \            ')'\n    firstMark       = textDocument.find(firstAnchorRe)\n   \
-    \ if (firstMark) {\n        for (i=0;i<20;i++){\n            nextMark = firstMark.findNext(secondAnchorRe)\n\
-    \            if (nextMark) {\n                break\n            } else {\n  \
-    \              firstMark = firstMark.findNext(firstAnchorRe)\n               \
-    \ if (! firstMark) {\n                    break\n                }\n         \
-    \   }\n        }\n    }\n\n    if (firstMark && nextMark) {\n        lastMark\
-    \ = nextMark.findNext('^\\\\s*Notes:?\\\\s*1\\\\.?')\n        log.write('78 and\
-    \ lastMark is ' + lastMark)\n    }\n    if (firstMark && nextMark && lastMark)\
-    \ {\n    \n    // 23,520,968,297\n        moneyRows       = []\n        \n   \
-    \     largeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\\d{3},\\\\d{3},\\\\d{3})\\\\s+'\n\
-    \        subDoc          = textDocument.slice(nextMark.index, lastMark.index)\n\
-    \        \n        log.write('subDoc is: ' + subDoc)\n        log.write(subDoc.getChildren().join('\\\
-    n'))\n        \n        firstColLength = getFirstColLength(subDoc)\n        log.write('firstColLength:\
-    \ ' + firstColLength)\n        // collect all the rows with large money\n    \
-    \    moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\n\
-    \            // holder is first column separated from second column by at least\
-    \ 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n           \
-    \ name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now concatenate\
-    \ all the components of the name together. It can be wrapped on \n           \
-    \ // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n \
-    \           holderList.add([\n                \"Holder\" : name,\n           \
-    \     \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n    \
-    \    \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    \ return '62 ' + firstMark.value\n    if (firstMark) {\n        for (i=0;i<20;i++){\n\
+    \            nextMark = firstMark.findNext(secondAnchorRe)\n            if (nextMark)\
+    \ {\n                break\n            } else {\n                firstMark =\
+    \ firstMark.findNext(firstAnchorRe)\n                if (! firstMark) {\n    \
+    \                break\n                }\n            }\n        }\n    }\n\n\
+    \    if (firstMark && nextMark) {\n        lastMark = nextMark.findNext('^\\\\\
+    s*Notes:?\\\\s*1\\\\.?')\n        log.write('78 and lastMark is ' + lastMark)\n\
+    \    }\n    if (firstMark && nextMark && lastMark) {\n    \n    // 23,520,968,297\n\
+    \        moneyRows       = []\n        \n        largeMoneyRe    = '\\\\s+(\\\\\
+    d{1,3},\\\\d{3},\\\\d{3},\\\\d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index,\
+    \ lastMark.index)\n        \n        log.write('subDoc is: ' + subDoc)\n     \
+    \   log.write(subDoc.getChildren().join('\\n'))\n        \n        firstColLength\
+    \ = getFirstColLength(subDoc)\n        log.write('firstColLength: ' + firstColLength)\n\
+    \        // collect all the rows with large money\n        moneyRows = subDoc.findAll(largeMoneyRe)\n\
+    \        moneyRows.each{ m ->\n\n            // holder is first column separated\
+    \ from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
+    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
+    \ concatenate all the components of the name together. It can be wrapped on \n\
+    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
+    \            holderList.add([\n                \"Holder\" : name,\n          \
+    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
+    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
     // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
     \                            registered number 102498. The provisions regulating\
     \ the operations \n//   its nominee Guaranty                                 \
@@ -153,28 +153,28 @@ mappings:
     \\s*.*top\\\\s*(10|ten)\\\\s*shareholders\\\\s*' + \n                      '|Shareholdings\\\
     \\s*of\\\\s*Top\\\\s*10\\\\s*Ordinary\\\\s*Shareholders\\\\s*$' +\n          \
     \            ')'\n    firstMark       = textDocument.find(firstAnchorRe)\n   \
-    \ if (firstMark) {\n        for (i=0;i<20;i++){\n            nextMark = firstMark.findNext(secondAnchorRe)\n\
-    \            if (nextMark) {\n                break\n            } else {\n  \
-    \              firstMark = firstMark.findNext(firstAnchorRe)\n               \
-    \ if (! firstMark) {\n                    break\n                }\n         \
-    \   }\n        }\n    }\n\n    if (firstMark && nextMark) {\n        lastMark\
-    \ = nextMark.findNext('^\\\\s*Notes:?\\\\s*1\\\\.?')\n        log.write('78 and\
-    \ lastMark is ' + lastMark)\n    }\n    if (firstMark && nextMark && lastMark)\
-    \ {\n    \n    // 23,520,968,297\n        moneyRows       = []\n        \n   \
-    \     largeMoneyRe    = '\\\\s+(\\\\d{1,3},\\\\d{3},\\\\d{3},\\\\d{3})\\\\s+'\n\
-    \        subDoc          = textDocument.slice(nextMark.index, lastMark.index)\n\
-    \        \n        log.write('subDoc is: ' + subDoc)\n        log.write(subDoc.getChildren().join('\\\
-    n'))\n        \n        firstColLength = getFirstColLength(subDoc)\n        log.write('firstColLength:\
-    \ ' + firstColLength)\n        // collect all the rows with large money\n    \
-    \    moneyRows = subDoc.findAll(largeMoneyRe)\n        moneyRows.each{ m ->\n\n\
-    \            // holder is first column separated from second column by at least\
-    \ 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n           \
-    \ name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now concatenate\
-    \ all the components of the name together. It can be wrapped on \n           \
-    \ // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n \
-    \           holderList.add([\n                \"Holder\" : name,\n           \
-    \     \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n    \
-    \    \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
+    \ return '62 ' + firstMark.value\n    if (firstMark) {\n        for (i=0;i<20;i++){\n\
+    \            nextMark = firstMark.findNext(secondAnchorRe)\n            if (nextMark)\
+    \ {\n                break\n            } else {\n                firstMark =\
+    \ firstMark.findNext(firstAnchorRe)\n                if (! firstMark) {\n    \
+    \                break\n                }\n            }\n        }\n    }\n\n\
+    \    if (firstMark && nextMark) {\n        lastMark = nextMark.findNext('^\\\\\
+    s*Notes:?\\\\s*1\\\\.?')\n        log.write('78 and lastMark is ' + lastMark)\n\
+    \    }\n    if (firstMark && nextMark && lastMark) {\n    \n    // 23,520,968,297\n\
+    \        moneyRows       = []\n        \n        largeMoneyRe    = '\\\\s+(\\\\\
+    d{1,3},\\\\d{3},\\\\d{3},\\\\d{3})\\\\s+'\n        subDoc          = textDocument.slice(nextMark.index,\
+    \ lastMark.index)\n        \n        log.write('subDoc is: ' + subDoc)\n     \
+    \   log.write(subDoc.getChildren().join('\\n'))\n        \n        firstColLength\
+    \ = getFirstColLength(subDoc)\n        log.write('firstColLength: ' + firstColLength)\n\
+    \        // collect all the rows with large money\n        moneyRows = subDoc.findAll(largeMoneyRe)\n\
+    \        moneyRows.each{ m ->\n\n            // holder is first column separated\
+    \ from second column by at least 3 spaces\n\n            amt = m.value.findAll(largeMoneyRe)[0]\n\
+    \            name = m.value.split('\\\\s{3,}')[0].trim()\n\n            // now\
+    \ concatenate all the components of the name together. It can be wrapped on \n\
+    \            // up to 4 lines\n            name = gatherName(name, m, firstColLength)\n\
+    \            holderList.add([\n                \"Holder\" : name,\n          \
+    \      \"Amount\" : amt ? amt.trim() : ''\n                ])\n        }\n   \
+    \     \n    }\n}\n\nreturn holderList\n\n/*****************************************************/\n\
     // JPMorgan Chase Bank N.A., \n//   depositary for ADSs, through             \
     \                            registered number 102498. The provisions regulating\
     \ the operations \n//   its nominee Guaranty                                 \
