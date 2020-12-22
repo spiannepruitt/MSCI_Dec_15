@@ -107,14 +107,15 @@ mappings:
     \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
     \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
     \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
-    \\s*of\\\\s*shareholders')\n    retLen  = -1\n    if (mark) {\n        str   \
-    \  = mark.value\n        orgLen  = str.length()\n        log.write('orgLen: '\
-    \ + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
+    \\s*of\\\\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if\
+    \ (mark) {\n        str     = mark.value\n        orgLen  = str.length()\n   \
+    \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
     \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
     \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
-    \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
-    \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
-    \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}"
+    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        if (firstColStr) {\n            log.write('firstColStr:\
+    \ ***' + firstColStr + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
+    \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
+    \ retLen\n}"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
@@ -212,14 +213,15 @@ mappings:
     \ = mark.index\n        log.write('now compareIndex is ' + compareIndex)\n   \
     \     mark = mark.findNext('\\\\S')\n        if (!mark) {break}\n        \n  \
     \  }\n    return n\n}\n\ndef getFirstColLength(sDoc) {\n    mark    = sDoc.find('(?i)Name\\\
-    \\s*of\\\\s*shareholders')\n    retLen  = -1\n    if (mark) {\n        str   \
-    \  = mark.value\n        orgLen  = str.length()\n        log.write('orgLen: '\
-    \ + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
+    \\s*of\\\\s*shareholders(\\\\(Full\\\\s*name\\\\))?')\n    retLen  = -1\n    if\
+    \ (mark) {\n        str     = mark.value\n        orgLen  = str.length()\n   \
+    \     log.write('orgLen: ' + orgLen)\n        \n        firstColStrTrimmed = mark.value.trim().split('\\\
     \\s{3,}')[0]\n        log.write('firstColStrTrimmed: ***' + firstColStrTrimmed\
     \ + '***')\n        \n        firstColStr = mark.findAndExtract('^\\\\s*(' + firstColStrTrimmed\
-    \ + '\\\\s{3,})[A-Za-z]',1)\n        log.write('firstColStr: ***' + firstColStr\
-    \ + '***')\n        \n        retLen = orgLen = firstColStr.length()\n       \
-    \ log.write('retLen: ' + retLen)\n        \n\n    }\n    return retLen\n}\n```\n"
+    \ + '\\\\s{3,})[A-Za-z]',1)?.value\n        if (firstColStr) {\n            log.write('firstColStr:\
+    \ ***' + firstColStr + '***')\n            \n            retLen = orgLen - firstColStr.length()\n\
+    \            log.write('retLen: ' + retLen)\n        }        \n\n    }\n    return\
+    \ retLen\n}\n```\n"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
