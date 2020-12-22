@@ -9,7 +9,7 @@ mappings:
   showHelp: false
   variableName: "holderList1"
   attachEnabled: true
-  previewEnabled: false
+  previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -339,7 +339,7 @@ mappings:
   showHelp: false
   datasetName: "MajorShareholders"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
   grouping: "Scripting"
@@ -361,7 +361,7 @@ datasetMappings:
   showHelp: false
   datasetName: "MajorShareholders"
   attachEnabled: true
-  previewEnabled: true
+  previewEnabled: false
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
   grouping: "Scripting"
