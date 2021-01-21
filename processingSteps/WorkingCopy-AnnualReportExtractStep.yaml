@@ -16,8 +16,8 @@ mappings:
   minimized: true
   showHelp: false
   variableName: "annualMeeting"
-  attachEnabled: true
-  previewEnabled: true
+  attachEnabled: false
+  previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
@@ -67,7 +67,7 @@ mappings:
   minimized: true
   showHelp: false
   variableName: "checkOutput"
-  attachEnabled: true
+  attachEnabled: false
   previewEnabled: false
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
@@ -109,6 +109,29 @@ mappings:
   grouping: "Scripting"
   mappingType: "DATASET"
   uiContribution: "groovyScriptDataset-mapping-settings"
+- !<groovyScriptColumn>
+  uuid: "a48c74e9-956a-14a7-e8f9-e3302e03a155"
+  minimized: true
+  showHelp: false
+  variableName: "testlog"
+  attachEnabled: true
+  previewEnabled: true
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "log.write(\n    '''\n    Hello,\n    \n    Multiline string.\n    \n  \
+    \  \n    \n    Goes down to here.\n    \n    \n    \n    \n    And there.\n  \
+    \  \n    \n    \n    \n    \n    \n    Even more\n    '''\n    )"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nlog.write(\n    '''\n    Hello,\n    \n    Multiline string.\n    \n    \n\
+    \    \n    Goes down to here.\n    \n    \n    \n    \n    And there.\n    \n\
+    \    \n    \n    \n    \n    \n    Even more\n    '''\n    )\n```\n"
+  plugin: "groovy"
+  grouping: "Scripting"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 documentSets:
 - enabled: true
   name: "MSCI_Word_AR_DocSet"
