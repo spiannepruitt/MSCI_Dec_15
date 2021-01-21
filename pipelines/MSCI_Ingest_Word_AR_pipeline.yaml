@@ -1,5 +1,37 @@
 ---
 batchSize: 1
 streaming: false
-steps: []
+steps:
+- !<remoteSource>
+  name: "MSCI-WordAnnualReports_Source"
+  uuid: "09cfa492-aecc-4159-b3da-cffae6bcd831"
+  minimized: true
+  enabled: true
+  sourceDefinitionName: "MSCI-WordAnnualReports_Source"
+  implementation: "remoteSource"
+  tags:
+  - "reader"
+- !<pluginBuilder>
+  name: "Document (Paragraphs/Tables)"
+  uuid: "02647aef-633b-4b98-b81a-51901e521b26"
+  minimized: true
+  enabled: true
+  config: !<wordParser>
+    name: "Document (Paragraphs/Tables)"
+    applyXslt: false
+    implementation: "wordParser"
+  implementation: "pluginBuilder"
+  tags:
+  - "processor"
+  - "builder"
+- !<documentSetWriter>
+  name: "MSCI_Word_AR_DocSet"
+  uuid: "f1984637-5388-46a5-9a1d-28b0a5ecb41c"
+  minimized: true
+  enabled: true
+  documentSetName: "MSCI_Word_AR_DocSet"
+  implementation: "documentSetWriter"
+  tags:
+  - "writer"
+  - "document set"
 schemaVersion: 1
