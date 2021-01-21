@@ -2,10 +2,105 @@
 plugin: "wordParser"
 processingTimeout: 600000
 markers: []
-mappings: []
+mappings:
+- !<groovyScriptColumn>
+  uuid: "cc7e3037-400f-4839-c8c5-4d8bbb3d9a78"
+  minimized: true
+  showHelp: false
+  variableName: "AnnualMeeting"
+  attachEnabled: true
+  previewEnabled: false
+  cleanerType: "NONE"
+  outputDateFormat: "MM/dd/yyyy"
+  inputDateFormat: "dd/MM/yyyy"
+  script: "config = [\n    'label': 'AnnualMeeting',\n    'threshold': '.5',\n   \
+    \ 'filter_by_lemmas_only': false,\n    'entities': [\n        ['label': 'AnnualMeetingDate',\n\
+    \            'type': 'DATE',\n            'phrase': 'annual meeting'\n       \
+    \ ],\n        ['label': 'AnnualMeetingLocation',\n            'pattern': [['ENT_TYPE':\
+    \ 'CARDINAL', 'OP': '+'],\n                        ['POS': 'PROPN', 'OP': '+'],\n\
+    \                        ['OP': '*'],\n                        ['ENT_TYPE': 'GPE'],\n\
+    \                        ['OP': '*'],\n                        ['ENT_TYPE': 'GPE',\
+    \ 'OP': '*']],\n            'phrase': 'annual meeting'\n        ]\n    ],\n  \
+    \  'examples': [\n        'The 2020 Annual Meeting of Shareholders will be held\
+    \ on Thursday, June 1 at 8:45 a.m. EST, at 101 Main St, Charlotte, NC.'\n    ],\n\
+    \    'questions': [\n        'When and where is the Annual Meeting of Shareholders?'\n\
+    \    ]\n]\n\nrows = wordDocument.extract_similar_sentences(config)\n\nif (rows.isEmpty())\
+    \ {\n    return null\n} else {\n    value = rows[0].getValue()\n    if (rows.size()\
+    \ > 1) {\n        value += rows[1].getValue()\n    }\n    date = rows[0].getRelated('AnnualMeetingDate').getContent('\
+    \ ')\n    location = rows[0].getRelated('AnnualMeetingLocation').getContent('\
+    \ ')\n    return ['sentence': value, 'score': rows[0].getProb(), 'date': date,\
+    \ 'location': location]\n}\n"
+  name: "Groovy Script (Column)"
+  implementation: "groovyScriptColumn"
+  plugin: "groovy"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
+    ```\nconfig = [\n    'label': 'AnnualMeeting',\n    'threshold': '.5',\n    'filter_by_lemmas_only':\
+    \ false,\n    'entities': [\n        ['label': 'AnnualMeetingDate',\n        \
+    \    'type': 'DATE',\n            'phrase': 'annual meeting'\n        ],\n   \
+    \     ['label': 'AnnualMeetingLocation',\n            'pattern': [['ENT_TYPE':\
+    \ 'CARDINAL', 'OP': '+'],\n                        ['POS': 'PROPN', 'OP': '+'],\n\
+    \                        ['OP': '*'],\n                        ['ENT_TYPE': 'GPE'],\n\
+    \                        ['OP': '*'],\n                        ['ENT_TYPE': 'GPE',\
+    \ 'OP': '*']],\n            'phrase': 'annual meeting'\n        ]\n    ],\n  \
+    \  'examples': [\n        'The 2020 Annual Meeting of Shareholders will be held\
+    \ on Thursday, June 1 at 8:45 a.m. EST, at 101 Main St, Charlotte, NC.'\n    ],\n\
+    \    'questions': [\n        'When and where is the Annual Meeting of Shareholders?'\n\
+    \    ]\n]\n\nrows = wordDocument.extract_similar_sentences(config)\n\nif (rows.isEmpty())\
+    \ {\n    return null\n} else {\n    value = rows[0].getValue()\n    if (rows.size()\
+    \ > 1) {\n        value += rows[1].getValue()\n    }\n    date = rows[0].getRelated('AnnualMeetingDate').getContent('\
+    \ ')\n    location = rows[0].getRelated('AnnualMeetingLocation').getContent('\
+    \ ')\n    return ['sentence': value, 'score': rows[0].getProb(), 'date': date,\
+    \ 'location': location]\n}\n\n```\n"
+  uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
+- !<groovyScriptDataset>
+  uuid: "066f96b0-2adc-7d55-5745-3bda14eb88cb"
+  minimized: true
+  showHelp: false
+  datasetName: "MatchFilesWithCompany_Dataset"
+  attachEnabled: true
+  previewEnabled: true
+  script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
+    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
+    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
+    \ annualMeeting.location)\n}\nreturn row\n"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  plugin: "groovy"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
+    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
+    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
+    \ annualMeeting.location)\n}\nreturn row\n\n```\n"
+  mappingType: "DATASET"
+  uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCI_Word_AR_DocSet"
 helpers: []
 schemaVersion: 1
-datasetMappings: []
+datasetMappings:
+- !<groovyScriptDataset>
+  uuid: "066f96b0-2adc-7d55-5745-3bda14eb88cb"
+  minimized: true
+  showHelp: false
+  datasetName: "MatchFilesWithCompany_Dataset"
+  attachEnabled: true
+  previewEnabled: true
+  script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
+    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
+    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
+    \ annualMeeting.location)\n}\nreturn row\n"
+  name: "Groovy Script (Row)"
+  implementation: "groovyScriptDataset"
+  plugin: "groovy"
+  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
+    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
+    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
+    \ annualMeeting.location)\n}\nreturn row\n\n```\n"
+  mappingType: "DATASET"
+  uiContribution: "groovyScriptDataset-mapping-settings"
