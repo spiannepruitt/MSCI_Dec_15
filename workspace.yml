@@ -14,6 +14,8 @@ objects:
     type: "SourceDefinition"
   - name: "MSCIBatches"
     type: "SourceDefinition"
+  - name: "MSCI-WordAnnualReports"
+    type: "SourceDefinition"
   documentSet:
   - name: "MSCI_Company_List_DocSet"
     type: "DocumentSet"
