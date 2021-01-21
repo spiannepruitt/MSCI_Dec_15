@@ -26,6 +26,71 @@ columns:
     skipHeader: true
     ignoreConfidence: true
   relatedDatasetRequired: false
+- name: "AnnualMeetingScore"
+  longName: "AnnualMeetingScore"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "AnnualMeetingLocation"
+  longName: "AnnualMeetingLocation"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "OutstandingCommonSharesSentence"
+  longName: "OutstandingCommonSharesSentence"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "OutstandingCommonSharesSentenceS"
+  longName: "OutstandingCommonSharesSentenceScore"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
+- name: "OutstandingCommonShares"
+  longName: "OutstandingCommonShares"
+  type: "string"
+  summary: false
+  required: false
+  immutable: false
+  primaryKey: false
+  dataSource:
+    position: 0
+    joinWithIds: true
+    skipHeader: true
+    ignoreConfidence: true
+  relatedDatasetRequired: false
 dataSource:
   position: 0
   joinWithIds: true
