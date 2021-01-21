@@ -47,6 +47,8 @@ objects:
     type: "ProcessingStep"
   - name: "Rule2-Rule3_Step"
     type: "ProcessingStep"
+  - name: "WorkingCopy-AnnualReportExtractStep"
+    type: "ProcessingStep"
   model:
   - name: "test"
     type: "Model"
