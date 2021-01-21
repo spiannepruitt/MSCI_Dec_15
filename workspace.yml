@@ -2,6 +2,8 @@
 schemaVersion: 1
 objects:
   dataset:
+  - name: "AnnualReportsExtracts"
+    type: "Dataset"
   - name: "MajorShareholders"
     type: "Dataset"
   - name: "MatchFilesWithCompany_Dataset"
