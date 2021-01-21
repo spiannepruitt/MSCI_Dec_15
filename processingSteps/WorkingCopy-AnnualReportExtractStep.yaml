@@ -3,7 +3,9 @@ plugin: "wordParser"
 processingTimeout: 600000
 markers: []
 mappings: []
-documentSets: []
+documentSets:
+- enabled: true
+  name: "MSCI_Word_AR_DocSet"
 helpers: []
 schemaVersion: 1
 datasetMappings: []
