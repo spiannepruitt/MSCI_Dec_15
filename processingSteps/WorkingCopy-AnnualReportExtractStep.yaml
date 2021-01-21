@@ -1,13 +1,21 @@
 ---
 plugin: "wordParser"
 processingTimeout: 600000
-markers: []
+markers:
+- !<generalQueryMarker>
+  uuid: "6a8d670a-7e07-4b8d-9df8-9115998aa273"
+  query: "\"Public Storage.docx\""
+  name: "General Query Marker"
+  implementation: "generalQueryMarker"
+  plugin: "core"
+  documentationMarkdown: "Filter using the query \"Public Storage.docx\""
+  uiContribution: "generalQueryMarker-marker-settings"
 mappings:
 - !<groovyScriptColumn>
   uuid: "cc7e3037-400f-4839-c8c5-4d8bbb3d9a78"
   minimized: true
   showHelp: false
-  variableName: "AnnualMeeting"
+  variableName: "annualMeeting"
   attachEnabled: true
   previewEnabled: false
   cleanerType: "NONE"
@@ -58,25 +66,25 @@ mappings:
   uuid: "5259b69f-185a-9a79-7430-62dc4efa2680"
   minimized: true
   showHelp: false
-  variableName: "CheckOutput"
+  variableName: "checkOutput"
   attachEnabled: true
   previewEnabled: true
   cleanerType: "NONE"
   outputDateFormat: "MM/dd/yyyy"
   inputDateFormat: "dd/MM/yyyy"
-  script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
-    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
-    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
-    \ annualMeeting.location)\n}\nlog.write(row)\n"
+  script: "\noutRow = ['filename' : document.filename]\nif (annualMeeting) {\n   \
+    \ outRow.put('AnnualMeetingSentence', annualMeeting.sentence)\n    outRow.put('AnnualMeetingScore',\
+    \ annualMeeting.score)\n    outRow.put('AnnualMeetingDate', annualMeeting.date)\n\
+    \    outRow.put('AnnualMeetingLocation', annualMeeting.location)\n}\nlog.write(outRow)\n"
   name: "Groovy Script (Column)"
   implementation: "groovyScriptColumn"
   plugin: "groovy"
   grouping: "Scripting"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
-    ```\nrow = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
-    \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
-    \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
-    \ annualMeeting.location)\n}\nlog.write(row)\n\n```\n"
+    ```\n\noutRow = ['filename' : document.filename]\nif (annualMeeting) {\n    outRow.put('AnnualMeetingSentence',\
+    \ annualMeeting.sentence)\n    outRow.put('AnnualMeetingScore', annualMeeting.score)\n\
+    \    outRow.put('AnnualMeetingDate', annualMeeting.date)\n    outRow.put('AnnualMeetingLocation',\
+    \ annualMeeting.location)\n}\nlog.write(outRow)\n\n```\n"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptDataset>
@@ -84,7 +92,7 @@ mappings:
   minimized: true
   showHelp: false
   datasetName: "AnnualReportsExtracts"
-  attachEnabled: true
+  attachEnabled: false
   previewEnabled: false
   script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
     \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
@@ -112,7 +120,7 @@ datasetMappings:
   minimized: true
   showHelp: false
   datasetName: "AnnualReportsExtracts"
-  attachEnabled: true
+  attachEnabled: false
   previewEnabled: false
   script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
     \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
