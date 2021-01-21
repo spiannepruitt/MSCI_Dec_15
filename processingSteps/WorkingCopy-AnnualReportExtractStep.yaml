@@ -58,7 +58,7 @@ mappings:
   uuid: "066f96b0-2adc-7d55-5745-3bda14eb88cb"
   minimized: true
   showHelp: false
-  datasetName: "MatchFilesWithCompany_Dataset"
+  datasetName: "AnnualReportsExtracts"
   attachEnabled: true
   previewEnabled: true
   script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
@@ -86,7 +86,7 @@ datasetMappings:
   uuid: "066f96b0-2adc-7d55-5745-3bda14eb88cb"
   minimized: true
   showHelp: false
-  datasetName: "MatchFilesWithCompany_Dataset"
+  datasetName: "AnnualReportsExtracts"
   attachEnabled: true
   previewEnabled: true
   script: "row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
