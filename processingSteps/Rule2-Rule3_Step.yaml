@@ -867,8 +867,8 @@ mappings:
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
     \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
-    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + document.sourcePath\
-    \ + '\"'\nstrSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchHelper.searchDataset\
+    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + varFilename + '\"'\n\
+    strSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchHelper.searchDataset\
     \ (strSet, strQuery, 1)\nlog.write('in varCompany, strQuery is: ' + strQuery)\n\
     //  searchHelper.searchDataset('AnnualReportExtracts', \"National\")\n\nif (coRow)\
     \ {\n    return coRow[0].Company\n}\n"
@@ -882,8 +882,8 @@ mappings:
     \ndef searchHelper = SpringApplicationContext.getBean(\"injectableSearchHelper\"\
     )\n\ncoRow    = []\nstrQuery = 'Filename:\"' + document.sourcePath + '\"'\ncoRow\
     \    = searchHelper.searchDataset (\"MatchFilesWithCompany_Dataset\", strQuery,\
-    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + document.sourcePath\
-    \ + '\"'\nstrSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchHelper.searchDataset\
+    \ 1)\n*/\ncoRow       = []\nstrQuery    = 'Filename:\"' + varFilename + '\"'\n\
+    strSet      = \"MatchFilesWithCompany_Dataset\"\ncoRow   = searchHelper.searchDataset\
     \ (strSet, strQuery, 1)\nlog.write('in varCompany, strQuery is: ' + strQuery)\n\
     //  searchHelper.searchDataset('AnnualReportExtracts', \"National\")\n\nif (coRow)\
     \ {\n    return coRow[0].Company\n}\n\n```\n"
