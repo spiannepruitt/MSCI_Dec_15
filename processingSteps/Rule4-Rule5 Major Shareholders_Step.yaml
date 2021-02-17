@@ -124,6 +124,7 @@ mappings:
     \ {\n            len ++\n        } else {break;}\n    }\n    return len\n}"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\n// Section Header - \"Major Shareholders\"\n// \"1. Search for the primary\
     \ keyword in the document\n// 2. If keyword exists, then collect all company names\
@@ -235,7 +236,6 @@ mappings:
     \ {\n    len = 0\n    for (i=0;i<s.length();i++) {\n        if (s[i].isAllWhitespace())\
     \ {\n            len ++\n        } else {break;}\n    }\n    return len\n}\n```\n"
   implementation: "groovyScriptColumn"
-  plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -276,6 +276,7 @@ mappings:
     \        \n    }\n    return retIndex\n}"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nif (holderList1) {\n    return []\n}\nholderList = []\n/*\nINTEREST OF SUBSTANTIAL\
     \ SHAREHOLDERS (LONG POSITION) \n \nTo the knowledge of the Company, as at 31\
@@ -304,7 +305,6 @@ mappings:
     \ else {\n            retIndex = m.index\n            break;\n        }\n    \
     \        \n    }\n    return retIndex\n}\n```\n"
   implementation: "groovyScriptColumn"
-  plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -320,10 +320,10 @@ mappings:
   script: "return"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nreturn\n```\n"
   implementation: "groovyScriptColumn"
-  plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -347,6 +347,7 @@ mappings:
     \ returnRow"
   name: "Groovy Script (Column)"
   grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nrow = holderList1\nif (!row) {\n    row = holderList2\n}\nreturnRow = []\n\
     row.each{it ->\n    returnRow.add([\n        \"Filename\"      : document.filename,\n\
@@ -358,7 +359,6 @@ mappings:
     \ ''\n        ])\n    log.write('added returnRow: ' + returnRow.last())\n}\nreturn\
     \ returnRow\n```\n"
   implementation: "groovyScriptColumn"
-  plugin: "groovy"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptDataset>
@@ -371,17 +371,16 @@ mappings:
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
   grouping: "Scripting"
+  plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
   implementation: "groovyScriptDataset"
-  plugin: "groovy"
-  mappingType: "DATASET"
   uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
 helpers: []
-schemaVersion: 1
 datasetMappings:
 - !<groovyScriptDataset>
   uuid: "2366d926-93be-c31f-cd33-783843be6502"
@@ -393,9 +392,10 @@ datasetMappings:
   script: "row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row"
   name: "Groovy Script (Row)"
   grouping: "Scripting"
+  plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = []\nif (makeRows) {\n    return makeRows\n}\nreturn row\n```\n"
   implementation: "groovyScriptDataset"
-  plugin: "groovy"
-  mappingType: "DATASET"
   uiContribution: "groovyScriptDataset-mapping-settings"
+schemaVersion: 1

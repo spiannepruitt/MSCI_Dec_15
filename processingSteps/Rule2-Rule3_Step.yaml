@@ -12,12 +12,12 @@ mappings:
   previewEnabled: false
   fixedValueType: "SOURCE_FILENAME"
   name: "Fixed value"
-  implementation: "fixedValueMapper"
+  grouping: "Simple"
   plugin: "core"
   documentationMarkdown: "Use the filename of the source document."
-  grouping: "Simple"
-  mappingType: "COLUMN"
+  implementation: "fixedValueMapper"
   uiContribution: "fixedValueMapper-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "085bcb0c-e678-c944-a188-7e1e8da93bd5"
   metadataVersion: 2
@@ -38,7 +38,7 @@ mappings:
     \\s*(millions|billions|thousands)' +\n                      ')'\n    \n} \n\n\
     new MapHelper()\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nclass MapHelper\n{\n    \n    def document        = null\n    def log   \
@@ -49,9 +49,9 @@ mappings:
     \     '(thousand|([Mm]|[Bb]|[Tt]r)illion)' +\n                      '|(?i)in\\\
     \\s*(millions|billions|thousands)' +\n                      ')'\n    \n} \n\n\
     new MapHelper()\n\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "b7e4db13-9636-184a-c3ff-36fd706fd9db"
   metadataVersion: 2
@@ -203,7 +203,7 @@ mappings:
     \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n        }\n    }\n    return val\n}\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nname            = ''\npar             = ''\namt             = ''\nstr   \
@@ -345,9 +345,9 @@ mappings:
     \                document.variables['listClassShares'] = listClassShares\n   \
     \               \n                val = listClassShares ? listClassShares[0].TotalSharesCommonStock\
     \ : ''\n        }\n    }\n    return val\n}\n\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "36f85bc5-315a-4d47-8481-e1310915e7d6"
   metadataVersion: 2
@@ -491,7 +491,7 @@ mappings:
     \    }\n}\nif (listClassShares) {\n    document.variables['listClassShares'] =\
     \ listClassShares\n}\nreturn val"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nif (varRule2AmountOfStock0) {return ''}\n// Section Header = Equitey Securities\
@@ -625,9 +625,9 @@ mappings:
     \ {\n            val = endMark.findAndExtract(numberRe,1)?.value\n        }\n\
     \    }\n}\nif (listClassShares) {\n    document.variables['listClassShares'] =\
     \ listClassShares\n}\nreturn val\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "170b2e85-137a-a822-51fc-0dd385ae7b6d"
   metadataVersion: 2
@@ -642,15 +642,15 @@ mappings:
   script: "ret = ''\nif (varRule2AmountOfStock0) {\n    return varRule2AmountOfStock0\n\
     } else if (varRule2AmountOfStock1) {\n    return varRule2AmountOfStock1\n} "
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nret = ''\nif (varRule2AmountOfStock0) {\n    return varRule2AmountOfStock0\n\
     } else if (varRule2AmountOfStock1) {\n    return varRule2AmountOfStock1\n} \n\
     ```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "8596d4cf-4a90-85a2-ba7c-7d0688c8ea9a"
   metadataVersion: 2
@@ -683,7 +683,7 @@ mappings:
     \\s*(\\\\S\\\\d.\\\\d{2,4})\\\\s*per\\\\s*share\\\\.', 1)?.value\n    }\n}\n\n\
     return val"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nstr         = ''\nval         = ''\ntestStr     = ''\npartMark    = null\n\
@@ -706,9 +706,9 @@ mappings:
     \ next.index + 4)\n        val = subDoc.findAndExtract('par\\\\s*value\\\\s*of\\\
     \\s*(\\\\S\\\\d.\\\\d{2,4})\\\\s*per\\\\s*share\\\\.', 1)?.value\n    }\n}\n\n\
     return val\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "dfbcc965-500d-49c4-b658-9a23c7cc3741"
   metadataVersion: 2
@@ -771,7 +771,7 @@ mappings:
     \        }\n    }\n}\n\nreturn val\n\n// Preferred stock, $0.10 par value, 15.0\
     \ shares authorized, none issued — —\n// Class A common stock, $0.01 par value"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\n// Section Header\n// CONSOLIDATED BALANCE SHEETS AT DECEMBER 31\n// Consolidated\
@@ -825,9 +825,9 @@ mappings:
     \        }\n    }\n}\n\nreturn val\n\n// Preferred stock, $0.10 par value, 15.0\
     \ shares authorized, none issued — —\n// Class A common stock, $0.01 par value\n\
     ```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "c1bd1844-61e0-4d64-bb51-776e8009decb"
   metadataVersion: 2
@@ -842,14 +842,14 @@ mappings:
   script: "ret = ''\nif (varRule31) {\n    ret = varRule31\n} else if (varRule32)\
     \ {\n    ret = varRule32\n}\nreturn ret"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nret = ''\nif (varRule31) {\n    ret = varRule31\n} else if (varRule32) {\n\
     \    ret = varRule32\n}\nreturn ret\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "234a28d7-fecb-8e70-c40a-5fb803afd39c"
   metadataVersion: 2
@@ -873,7 +873,7 @@ mappings:
     //  searchHelper.searchDataset('AnnualReportExtracts', \"National\")\n\nif (coRow)\
     \ {\n    return coRow[0].Company\n}\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\n/*\nimport com.pendosystems.canopy.core.utils.SpringApplicationContext\n\
@@ -887,9 +887,9 @@ mappings:
     \ (strSet, strQuery, 1)\nlog.write('in varCompany, strQuery is: ' + strQuery)\n\
     //  searchHelper.searchDataset('AnnualReportExtracts', \"National\")\n\nif (coRow)\
     \ {\n    return coRow[0].Company\n}\n\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptColumn>
   uuid: "103c0e8f-b258-4a47-8cdf-4c8a8c8cd923"
   minimized: true
@@ -915,7 +915,7 @@ mappings:
     \        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n  \
     \  ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
   plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nrow = []\nif (document.variables['listClassShares']) {\n    document.variables['listClassShares'].each{it\
@@ -932,9 +932,9 @@ mappings:
     \                : document.sourcePath,\n        // \"Company\"       : varCompany,\n\
     \        \"TotalSharesCommonStock\" : '',\n        \"ParValue\"      : ''\n  \
     \  ])\n}\nrow.each{it ->\n    log.write(it)\n}\n\nreturn row\n```\n"
-  grouping: "Scripting"
-  mappingType: "COLUMN"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
+  mappingType: "COLUMN"
 - !<groovyScriptDataset>
   uuid: "36e2bd39-d736-2212-5dab-16c8340c231f"
   minimized: true
@@ -944,18 +944,17 @@ mappings:
   previewEnabled: false
   script: "return testRows"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
-  mappingType: "DATASET"
+  grouping: "Scripting"
   plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     return testRows\n```\n"
-  grouping: "Scripting"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCIBatchesDocSet"
 helpers: []
-schemaVersion: 1
 datasetMappings:
 - !<groovyScriptDataset>
   uuid: "36e2bd39-d736-2212-5dab-16c8340c231f"
@@ -966,10 +965,11 @@ datasetMappings:
   previewEnabled: false
   script: "return testRows"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
-  mappingType: "DATASET"
+  grouping: "Scripting"
   plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     return testRows\n```\n"
-  grouping: "Scripting"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
+schemaVersion: 1

@@ -19,12 +19,12 @@ steps:
   config: !<tikaDocumentBuilder>
     name: "Tika (Text)"
     extractMetadata: false
-    implementation: "tikaDocumentBuilder"
     xmlOutput: false
-  implementation: "pluginBuilder"
+    implementation: "tikaDocumentBuilder"
   tags:
   - "processor"
   - "builder"
+  implementation: "pluginBuilder"
 - !<pluginProcessor>
   name: "Text"
   uuid: "b710b247-ee79-4812-b728-26cea40b0693"
@@ -40,18 +40,18 @@ steps:
     maxLineLength: 15000
     implementation: "textParser"
     resourcePath: "textParser"
-  implementation: "pluginProcessor"
   tags:
   - "processor"
   - "enricher"
+  implementation: "pluginProcessor"
 - !<documentSetWriter>
   name: "MSCI_Company_List_DocSet"
   uuid: "16cd5626-357f-476d-85fc-2e256b9be3a7"
   minimized: true
   enabled: true
   documentSetName: "MSCI_Company_List_DocSet"
-  implementation: "documentSetWriter"
   tags:
   - "writer"
   - "document set"
+  implementation: "documentSetWriter"
 schemaVersion: 1

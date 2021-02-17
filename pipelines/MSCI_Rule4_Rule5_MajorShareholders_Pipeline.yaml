@@ -9,28 +9,28 @@ steps:
   enabled: true
   documentSetName: "MSCIBatchesDocSet"
   query: "*"
-  implementation: "documentSetSource"
   tags:
   - "reader"
   - "document set"
+  implementation: "documentSetSource"
 - !<documentExtractionProcessingStep>
   name: "Rule4-Rule5 Major Shareholders"
   uuid: "3d4aa545-c25d-4a45-a16d-d274d7022685"
   minimized: false
   enabled: true
   processingStepName: "Rule4-Rule5 Major Shareholders_Step"
-  implementation: "documentExtractionProcessingStep"
   tags:
   - "processor"
   - "processing step"
+  implementation: "documentExtractionProcessingStep"
 - !<datasetWriter>
   name: "MajorShareholders"
   uuid: "77af3911-68e0-4462-8727-95c7a52bd354"
   minimized: true
   enabled: true
   datasetName: "MajorShareholders"
-  implementation: "datasetWriter"
   tags:
   - "writer"
   - "dataset"
+  implementation: "datasetWriter"
 schemaVersion: 1

@@ -6,9 +6,9 @@ markers:
   uuid: "6a8d670a-7e07-4b8d-9df8-9115998aa273"
   query: "\"Public Storage.docx\""
   name: "General Query Marker"
-  implementation: "generalQueryMarker"
-  documentationMarkdown: "Filter using the query \"Public Storage.docx\""
   plugin: "core"
+  documentationMarkdown: "Filter using the query \"Public Storage.docx\""
+  implementation: "generalQueryMarker"
   uiContribution: "generalQueryMarker-marker-settings"
 mappings:
 - !<groovyScriptColumn>
@@ -39,7 +39,8 @@ mappings:
     \ ')\n    return ['sentence': value, 'score': rows[0].getProb(), 'date': date,\
     \ 'location': location]\n}\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nconfig = [\n    'label': 'AnnualMeeting',\n    'threshold': '.5',\n    'filter_by_lemmas_only':\
     \ false,\n    'entities': [\n        ['label': 'AnnualMeetingDate',\n        \
@@ -58,8 +59,7 @@ mappings:
     \ ')\n    location = rows[0].getRelated('AnnualMeetingLocation').getContent('\
     \ ')\n    return ['sentence': value, 'score': rows[0].getProb(), 'date': date,\
     \ 'location': location]\n}\n\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptColumn>
@@ -77,14 +77,14 @@ mappings:
     \ annualMeeting.score)\n    outRow.put('AnnualMeetingDate', annualMeeting.date)\n\
     \    outRow.put('AnnualMeetingLocation', annualMeeting.location)\n}\nlog.write(outRow)\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\n\noutRow = ['filename' : document.filename]\nif (annualMeeting) {\n    outRow.put('AnnualMeetingSentence',\
     \ annualMeeting.sentence)\n    outRow.put('AnnualMeetingScore', annualMeeting.score)\n\
     \    outRow.put('AnnualMeetingDate', annualMeeting.date)\n    outRow.put('AnnualMeetingLocation',\
     \ annualMeeting.location)\n}\nlog.write(outRow)\n\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptDataset>
@@ -99,15 +99,15 @@ mappings:
     \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
     \ annualMeeting.location)\n}\nreturn row\n"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
+  grouping: "Scripting"
+  plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
     \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
     \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
     \ annualMeeting.location)\n}\nreturn row\n\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
-  mappingType: "DATASET"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
 - !<groovyScriptColumn>
   uuid: "a48c74e9-956a-14a7-e8f9-e3302e03a155"
@@ -123,20 +123,19 @@ mappings:
     \  \n    \n    Goes down to here.\n    \n    \n    \n    \n    And there.\n  \
     \  \n    \n    \n    \n    \n    \n    Even more\n    '''\n    )"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nlog.write(\n    '''\n    Hello,\n    \n    Multiline string.\n    \n    \n\
     \    \n    Goes down to here.\n    \n    \n    \n    \n    And there.\n    \n\
     \    \n    \n    \n    \n    \n    Even more\n    '''\n    )\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 documentSets:
 - enabled: true
   name: "MSCI_Word_AR_DocSet"
 helpers: []
-schemaVersion: 1
 datasetMappings:
 - !<groovyScriptDataset>
   uuid: "066f96b0-2adc-7d55-5745-3bda14eb88cb"
@@ -150,13 +149,14 @@ datasetMappings:
     \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
     \ annualMeeting.location)\n}\nreturn row\n"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
+  grouping: "Scripting"
+  plugin: "groovy"
+  mappingType: "DATASET"
   documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
     row = ['filename' : document.filename]\nif (annualMeeting) {\n    row.put('AnnualMeetingSentence',\
     \ annualMeeting.sentence)\n    row.put('AnnualMeetingScore', annualMeeting.score)\n\
     \    row.put('AnnualMeetingDate', annualMeeting.date)\n    row.put('AnnualMeetingLocation',\
     \ annualMeeting.location)\n}\nreturn row\n\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
-  mappingType: "DATASET"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
+schemaVersion: 1

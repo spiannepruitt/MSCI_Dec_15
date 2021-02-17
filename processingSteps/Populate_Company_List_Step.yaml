@@ -6,9 +6,9 @@ markers:
   uuid: "4efc0110-dfae-4c72-82c6-17bf4857c43f"
   query: "\"MatchFilenameWithCompany.txt\""
   name: "General Query Marker"
-  implementation: "generalQueryMarker"
-  documentationMarkdown: "Filter using the query \"MatchFilenameWithCompany.txt\""
   plugin: "core"
+  documentationMarkdown: "Filter using the query \"MatchFilenameWithCompany.txt\""
+  implementation: "generalQueryMarker"
   uiContribution: "generalQueryMarker-marker-settings"
 mappings:
 - !<groovyScriptColumn>
@@ -31,7 +31,8 @@ mappings:
     \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
     \ = rows\nreturn rows.size()\n"
   name: "Groovy Script (Column)"
-  implementation: "groovyScriptColumn"
+  grouping: "Scripting"
+  plugin: "groovy"
   documentationMarkdown: "Use the following groovy script to evaluate the value:\n\
     ```\nnumLines = textDocument.getChildren().size()\nlog.write('numLines is ' +\
     \ numLines)\n\nstartLine   = textDocument.find('Filename')\nrows        = []\n\
@@ -41,8 +42,7 @@ mappings:
     t')[2]\n        ])\n    line = line.findNext('\\\\S')\n    if (! line) {\n   \
     \     break;\n    }\n}\n\nrows.each{ it ->\n    log.write(it)\n}\ndocument.variables['returnRows']\
     \ = rows\nreturn rows.size()\n\n```\n"
-  plugin: "groovy"
-  grouping: "Scripting"
+  implementation: "groovyScriptColumn"
   uiContribution: "groovyScriptColumn-mapping-settings"
   mappingType: "COLUMN"
 - !<groovyScriptDataset>
@@ -55,18 +55,17 @@ mappings:
   previewEnabled: true
   script: "return document.variables['returnRows']"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
-  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
-    return document.variables['returnRows']\n```\n"
+  grouping: "Scripting"
   plugin: "groovy"
   mappingType: "DATASET"
-  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return document.variables['returnRows']\n```\n"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
 documentSets:
 - enabled: true
   name: "MSCI_Company_List_DocSet"
 helpers: []
-schemaVersion: 1
 datasetMappings:
 - !<groovyScriptDataset>
   uuid: "6ee81408-b293-6afa-4ade-7105fd17966f"
@@ -78,10 +77,11 @@ datasetMappings:
   previewEnabled: true
   script: "return document.variables['returnRows']"
   name: "Groovy Script (Row)"
-  implementation: "groovyScriptDataset"
-  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
-    return document.variables['returnRows']\n```\n"
+  grouping: "Scripting"
   plugin: "groovy"
   mappingType: "DATASET"
-  grouping: "Scripting"
+  documentationMarkdown: "Use the following groovy script to create the rows:\n```\n\
+    return document.variables['returnRows']\n```\n"
+  implementation: "groovyScriptDataset"
   uiContribution: "groovyScriptDataset-mapping-settings"
+schemaVersion: 1

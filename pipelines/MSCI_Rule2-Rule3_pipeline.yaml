@@ -9,28 +9,28 @@ steps:
   enabled: true
   documentSetName: "MSCIBatchesDocSet"
   query: "*"
-  implementation: "documentSetSource"
   tags:
   - "reader"
   - "document set"
+  implementation: "documentSetSource"
 - !<documentExtractionProcessingStep>
   name: "Rule2-Rule3_Step"
   uuid: "c6f42153-6a9a-4453-af44-448016ae8ffb"
   minimized: true
   enabled: true
   processingStepName: "Rule2-Rule3_Step"
-  implementation: "documentExtractionProcessingStep"
   tags:
   - "processor"
   - "processing step"
+  implementation: "documentExtractionProcessingStep"
 - !<datasetWriter>
   name: "Rule2-Rule3"
   uuid: "12711ff0-03c4-413b-ac68-a49bf0dd6faa"
   minimized: true
   enabled: true
   datasetName: "Rule2-Rule3"
-  implementation: "datasetWriter"
   tags:
   - "writer"
   - "dataset"
+  implementation: "datasetWriter"
 schemaVersion: 1

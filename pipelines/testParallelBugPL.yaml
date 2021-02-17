@@ -24,12 +24,12 @@ steps:
     scaleFactor: 0.0
     isStoreThumbnails: false
     skipPdfsWithoutFonts: false
-    implementation: "pdfToText"
     storeThumbnails: false
-  implementation: "pluginBuilder"
+    implementation: "pdfToText"
   tags:
   - "processor"
   - "builder"
+  implementation: "pluginBuilder"
 - !<pluginProcessor>
   name: "Text"
   uuid: "a526164b-444f-409e-b645-210e676c2ba2"
@@ -45,18 +45,18 @@ steps:
     maxLineLength: 15000
     implementation: "textParser"
     resourcePath: "textParser"
-  implementation: "pluginProcessor"
   tags:
   - "processor"
   - "enricher"
+  implementation: "pluginProcessor"
 - !<documentSetWriter>
   name: "TestParallelBugDocSet"
   uuid: "35cb10fe-e87e-4fbd-9e46-42ca9cc2200b"
   minimized: false
   enabled: true
   documentSetName: "TestParallelBugDocSet"
-  implementation: "documentSetWriter"
   tags:
   - "writer"
   - "document set"
+  implementation: "documentSetWriter"
 schemaVersion: 1

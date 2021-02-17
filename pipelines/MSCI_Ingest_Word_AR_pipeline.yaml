@@ -20,18 +20,18 @@ steps:
     name: "Document (Paragraphs/Tables)"
     applyXslt: false
     implementation: "wordParser"
-  implementation: "pluginBuilder"
   tags:
   - "processor"
   - "builder"
+  implementation: "pluginBuilder"
 - !<documentSetWriter>
   name: "MSCI_Word_AR_DocSet"
   uuid: "f1984637-5388-46a5-9a1d-28b0a5ecb41c"
   minimized: true
   enabled: true
   documentSetName: "MSCI_Word_AR_DocSet"
-  implementation: "documentSetWriter"
   tags:
   - "writer"
   - "document set"
+  implementation: "documentSetWriter"
 schemaVersion: 1
